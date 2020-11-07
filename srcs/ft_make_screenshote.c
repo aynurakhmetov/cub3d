@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_make_screenshote.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/07 18:13:26 by gmarva            #+#    #+#             */
+/*   Updated: 2020/11/07 18:13:37 by gmarva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/cub3d.h"
 
 static	int		make_head(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		size;
-	size = 14 + 40 + all->mapInfo->xRenderSize * all->mapInfo->yRenderSize
+	size = 14 + 40 + all->mapinfo->xrendersize * all->mapinfo->yrendersize
 			* all->win->bits_per_pixel / 8;
 	bmp_head[0] = 'B';
 	bmp_head[1] = 'M';
@@ -14,14 +26,14 @@ static	int		make_head(unsigned char *bmp_head,
 	bmp_head[5] = (unsigned char)(size >> 24);
 	bmp_head[10] = (unsigned char)(54);
 	bmp_fhead[0] = (unsigned char)(40);
-	bmp_fhead[4] = (unsigned char)(all->mapInfo->xRenderSize);
-	bmp_fhead[5] = (unsigned char)(all->mapInfo->xRenderSize >> 8);
-	bmp_fhead[6] = (unsigned char)(all->mapInfo->xRenderSize >> 16);
-	bmp_fhead[7] = (unsigned char)(all->mapInfo->xRenderSize >> 24);
-	bmp_fhead[8] = (unsigned char)(-all->mapInfo->yRenderSize);
-	bmp_fhead[9] = (unsigned char)(-all->mapInfo->yRenderSize >> 8);
-	bmp_fhead[10] = (unsigned char)(-all->mapInfo->yRenderSize >> 16);
-	bmp_fhead[11] = (unsigned char)(-all->mapInfo->yRenderSize >> 24);
+	bmp_fhead[4] = (unsigned char)(all->mapinfo->xrendersize);
+	bmp_fhead[5] = (unsigned char)(all->mapinfo->xrendersize >> 8);
+	bmp_fhead[6] = (unsigned char)(all->mapinfo->xrendersize >> 16);
+	bmp_fhead[7] = (unsigned char)(all->mapinfo->xrendersize >> 24);
+	bmp_fhead[8] = (unsigned char)(-all->mapinfo->yrendersize);
+	bmp_fhead[9] = (unsigned char)(-all->mapinfo->yrendersize >> 8);
+	bmp_fhead[10] = (unsigned char)(-all->mapinfo->yrendersize >> 16);
+	bmp_fhead[11] = (unsigned char)(-all->mapinfo->yrendersize >> 24);
 	bmp_fhead[12] = (unsigned char)(1);
 	bmp_fhead[14] = (unsigned char)(all->win->bits_per_pixel);
 	return (1);
@@ -39,8 +51,8 @@ static int		make_file_screen(unsigned char *bmp_head,
 		return (0);
 	write(fd, bmp_head, 14);
 	write(fd, bmp_fhead, 40);
-	size = all->win->bits_per_pixel / 8 * all->mapInfo->xRenderSize;
-	while (i < all->mapInfo->yRenderSize)
+	size = all->win->bits_per_pixel / 8 * all->mapinfo->xrendersize;
+	while (i < all->mapinfo->yrendersize)
 	{
 		write(fd, all->win->addr + i * all->win->line_length, size);
 		i++;

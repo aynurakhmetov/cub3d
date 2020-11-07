@@ -6,7 +6,7 @@
 /*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 21:45:13 by gmarva            #+#    #+#             */
-/*   Updated: 2020/10/25 21:45:21 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:14:13 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char **make_map(t_list **head, int size)
 
 t_map ft_map_parser(char *mapInput, int screenNeed)
 {
-    t_map mapInfo;
+    t_map mapinfo;
     int fd;
     char *line;
     char **newMap;
@@ -58,31 +58,31 @@ t_map ft_map_parser(char *mapInput, int screenNeed)
     }
     ft_lstadd_back(&head, ft_lstnew(line));
     newMap = make_map(&head, ft_lstsize(head));
-    if ((mapInfo.xRenderSize = ft_get_render_size(newMap, 1)) == -1)
+    if ((mapinfo.xrendersize = ft_get_render_size(newMap, 1)) == -1)
     {
        ft_putendl_fd("ERROR MESSAGE: R", 1); 
        exit(0);
     }
-    if ((mapInfo.yRenderSize = ft_get_render_size(newMap, 2)) == -1)
+    if ((mapinfo.yrendersize = ft_get_render_size(newMap, 2)) == -1)
      {
        ft_putendl_fd("ERROR MESSAGE: R", 1); 
        exit(0);
     }
-    mapInfo.northTexture = ft_get_texture(newMap, "NO");
-    mapInfo.southTexture = ft_get_texture(newMap, "SO");
-    mapInfo.westTexture = ft_get_texture(newMap, "WE");
-    mapInfo.eastTexture = ft_get_texture(newMap, "EA");
-    mapInfo.spriteTexture = ft_get_texture(newMap, "S ");
-    mapInfo.floorColor = ft_get_color(newMap, "F ");
-    mapInfo.ceilingColor = ft_get_color(newMap, "C ");
-    mapInfo.map = ft_get_map(newMap);
+    mapinfo.northtexture = ft_get_texture(newMap, "NO");
+    mapinfo.southtexture = ft_get_texture(newMap, "SO");
+    mapinfo.westtexture = ft_get_texture(newMap, "WE");
+    mapinfo.easttexture = ft_get_texture(newMap, "EA");
+    mapinfo.spritetexture = ft_get_texture(newMap, "S ");
+    mapinfo.floorcolor = ft_get_color(newMap, "F ");
+    mapinfo.ceilingcolor = ft_get_color(newMap, "C ");
+    mapinfo.map = ft_get_map(newMap);
    
     printf("%s %d\n", mapInput, screenNeed);
     free (newMap);
-    return (mapInfo);
+    return (mapinfo);
 }
 
-int ft_map_error_test(t_map mapInfo)
+int ft_map_error_test(t_map mapinfo)
 {
     int i;
     int j;
@@ -90,30 +90,30 @@ int ft_map_error_test(t_map mapInfo)
 
     i = 0;
     k = 0;
-    ft_map_test(mapInfo.map);
-    printf("TEST ERROR %d\n", mapInfo.xRenderSize);
-     while (mapInfo.map[i])
+    ft_map_test(mapinfo.map);
+    printf("TEST ERROR %d\n", mapinfo.xrendersize);
+     while (mapinfo.map[i])
     {
         j = 0;
-        while (mapInfo.map[i][j])
+        while (mapinfo.map[i][j])
         {
-            if (mapInfo.map[i][j] != 'N' && 
-                    mapInfo.map[i][j] != 'E' 
-                    &&  mapInfo.map[i][j] != 'W' 
-                    && mapInfo.map[i][j] != 'S'
-                    &&  mapInfo.map[i][j] != '1'
-                    &&  mapInfo.map[i][j] != '2'
-                    &&  mapInfo.map[i][j] != '0'
-                    &&  mapInfo.map[i][j] != ' '
+            if (mapinfo.map[i][j] != 'N' && 
+                    mapinfo.map[i][j] != 'E' 
+                    &&  mapinfo.map[i][j] != 'W' 
+                    && mapinfo.map[i][j] != 'S'
+                    &&  mapinfo.map[i][j] != '1'
+                    &&  mapinfo.map[i][j] != '2'
+                    &&  mapinfo.map[i][j] != '0'
+                    &&  mapinfo.map[i][j] != ' '
                     )
                 {
                     ft_putendl_fd("ERROR MESSAGE: musor in map", 1);
                     exit(0);
                 }
-            if (mapInfo.map[i][j] == 'N' || 
-                    mapInfo.map[i][j] == 'E' 
-                    || mapInfo.map[i][j] == 'W' 
-                    || mapInfo.map[i][j] == 'S')
+            if (mapinfo.map[i][j] == 'N' || 
+                    mapinfo.map[i][j] == 'E' 
+                    || mapinfo.map[i][j] == 'W' 
+                    || mapinfo.map[i][j] == 'S')
             {
                 k++;
             }
@@ -131,7 +131,7 @@ int ft_map_error_test(t_map mapInfo)
 
 int main(int argc, char *argv[])
 {
-    t_map mapInfo;
+    t_map mapinfo;
 
     if (argc < 2 || argc > 3)
     {
@@ -140,21 +140,21 @@ int main(int argc, char *argv[])
     }
     if (argc == 3 && ft_strncmp(argv[2], "--save", ft_strlen(argv[2])) == 0)
     {
-        mapInfo = ft_map_parser(argv[1], 1);
-        if (ft_map_error_test(mapInfo) == 0)
+        mapinfo = ft_map_parser(argv[1], 1);
+        if (ft_map_error_test(mapinfo) == 0)
         {
             return (0);
         }
-        ft_start_game(mapInfo, 1);
+        ft_start_game(mapinfo, 1);
     }
     else if (argc == 2) 
     {
-        mapInfo = ft_map_parser(argv[1], 0);
-        if (ft_map_error_test(mapInfo) == 0)
+        mapinfo = ft_map_parser(argv[1], 0);
+        if (ft_map_error_test(mapinfo) == 0)
         {
             return (0);
         }
-        ft_start_game(mapInfo, 0);
+        ft_start_game(mapinfo, 0);
     }
     else
     {

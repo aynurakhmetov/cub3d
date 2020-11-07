@@ -6,7 +6,7 @@
 /*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 17:16:15 by gmarva            #+#    #+#             */
-/*   Updated: 2020/10/26 17:16:17 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:14:05 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_cast_rays(t_all *all)
 	t_plr s;
 
 	i = 0;
-    while (ray.start <= ray.end && i < all->mapInfo->xRenderSize)
+    while (ray.start <= ray.end && i < all->mapinfo->xrendersize)
     {
 		ray.x = all->plr->x;
 		ray.y = all->plr->y;
@@ -103,6 +103,6 @@ void	ft_cast_rays(t_all *all)
 			ft_draw_wall(all, ray.y, ray.x, i, ray.start);
 		}
 		i++;
-		ray.start += FOV / all->mapInfo->xRenderSize;
+		ray.start += FOV / all->mapinfo->xrendersize;
 	}
 }

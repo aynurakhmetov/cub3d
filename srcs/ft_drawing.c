@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_drawing.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/07 18:11:28 by gmarva            #+#    #+#             */
+/*   Updated: 2020/11/07 18:11:43 by gmarva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/cub3d.h"
 
 void    ft_cub_2d(t_all *all)
@@ -75,7 +87,7 @@ int ft_get_wall_color(t_all *all, float y_draw, float x_draw, int start, int end
     }
     w = all->text[textnum].img_width * hit;
 
-    start = all->mapInfo->yRenderSize / 2.0 - height / 2.0;
+    start = all->mapinfo->yrendersize / 2.0 - height / 2.0;
  
     while (start < end)
     {
@@ -101,23 +113,23 @@ void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol)
    
     distance = sqrt(pow(x_draw - all->plr->x, 2) + pow(y_draw - all->plr->y, 2)) * cos(ugol - all->plr->dir);
      all->dist_wall[i] = distance;
-    perpendicular = (all->mapInfo->xRenderSize / 2) / tan(FOV/2);
-    height = (SCALE / distance) * (all->mapInfo->xRenderSize / 2) / tan(FOV/2);
-    start = all->mapInfo->yRenderSize/2 - height/2;
+    perpendicular = (all->mapinfo->xrendersize / 2) / tan(FOV/2);
+    height = (SCALE / distance) * (all->mapinfo->xrendersize / 2) / tan(FOV/2);
+    start = all->mapinfo->yrendersize/2 - height/2;
     end = height + start;
-	if (end > all->mapInfo->yRenderSize)
-        end = all->mapInfo->yRenderSize;
+	if (end > all->mapinfo->yrendersize)
+        end = all->mapinfo->yrendersize;
     int j = 0;
     while (j < start)
     {
-        ft_draw(all, j, i, all->mapInfo->ceilingColor);
+        ft_draw(all, j, i, all->mapinfo->ceilingcolor);
         j++;
     }
 
     wall_color = ft_get_wall_color(all, y_draw, x_draw, start, end, i, height);
-    while (end < all->mapInfo->yRenderSize)
+    while (end < all->mapinfo->yrendersize)
     {
-        ft_draw(all, end, i, all->mapInfo->floorColor);
+        ft_draw(all, end, i, all->mapinfo->floorcolor);
         end++;
     }
 }

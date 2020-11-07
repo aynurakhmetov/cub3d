@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_make_sprite.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/07 18:12:14 by gmarva            #+#    #+#             */
+/*   Updated: 2020/11/07 18:12:20 by gmarva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/cub3d.h"
 
 void ft_draw_sprites(t_all *all)
@@ -52,9 +64,9 @@ void ft_draw_sprite_2(t_all *all)
     while (sprite_dir - all->plr->dir < -M_PI) sprite_dir += 2*M_PI;
 	sprite_dir -= all->plr->dir;
     float sprite_dist = sqrt(pow(all->text[0].x - all->plr->x, 2) + pow(all->text[0].y - all->plr->y, 2)); 
-    float sprite_screen_size = (SCALE / sprite_dist) * (all->mapInfo->xRenderSize / 2) / tan(FOV/2);
-	int h_offset = all->mapInfo->xRenderSize/ (FOV * (180 / M_PI)) * ((180 / M_PI * sprite_dir) + 30) - sprite_screen_size / 2;
-    int v_offset = all->mapInfo->yRenderSize / 2 - sprite_screen_size / 2;
+    float sprite_screen_size = (SCALE / sprite_dist) * (all->mapinfo->xrendersize / 2) / tan(FOV/2);
+	int h_offset = all->mapinfo->xrendersize/ (FOV * (180 / M_PI)) * ((180 / M_PI * sprite_dir) + 30) - sprite_screen_size / 2;
+    int v_offset = all->mapinfo->yrendersize / 2 - sprite_screen_size / 2;
 	float j = 0;
 	float i = 0;
 	float step; 
@@ -66,7 +78,7 @@ void ft_draw_sprite_2(t_all *all)
 
 	while (i < sprite_screen_size)
 	{
-        if (h_offset + i < 0 || h_offset + i >= all->mapInfo->xRenderSize || all->dist_wall[(int)(h_offset + i)] < sprite_dist )
+        if (h_offset + i < 0 || h_offset + i >= all->mapinfo->xrendersize || all->dist_wall[(int)(h_offset + i)] < sprite_dist )
 		{
 			i++;
 			continue;
@@ -78,7 +90,7 @@ void ft_draw_sprite_2(t_all *all)
 		{
 			tex_y = (unsigned int)tex_pos & (all->text[0].img_height - 1);
 			color = all->text[0].addr + ((int)tex_y * all->text[0].line_length + ((int)(tex_x ) * (all->text[0].bits_per_pixel/ 8)));
-            if (v_offset + j < 0 || v_offset + j > all->mapInfo->yRenderSize)
+            if (v_offset + j < 0 || v_offset + j > all->mapinfo->yrendersize)
 			{
 				j++;
 				continue;

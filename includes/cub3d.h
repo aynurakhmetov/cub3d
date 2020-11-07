@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/07 18:14:29 by gmarva            #+#    #+#             */
+/*   Updated: 2020/11/07 18:14:36 by gmarva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #define SCALE 64 // условный размер каждого квадратика в карте
 
 #define FOV 3.14/3
@@ -20,43 +32,39 @@
 #include <unistd.h>
 #include <stdio.h>
 
-
-// Struct for map and parameters for map
-
 typedef struct	s_map 
 {
-	int xRenderSize;
-	int yRenderSize;
-	char *northTexture;
-	char *southTexture;
-	char *westTexture;
-	char *eastTexture;
-	char *spriteTexture;
-	unsigned int floorColor;
-	unsigned int ceilingColor;
+	int xrendersize;
+	int yrendersize;
+	char *northtexture;
+	char *southtexture;
+	char *westtexture;
+	char *easttexture;
+	char *spritetexture;
+	unsigned int floorcolor;
+	unsigned int ceilingcolor;
 	char **map;
 
 }				t_map;
 
-typedef struct	s_win //структура для окна
+typedef struct	s_win 
 {
 	void		*mlx;
 	void		*win;
 	void		*img;
-	//unsigned int		*addr;
 	void *addr;
 	int			bits_per_pixel;
 	int			line_length; 
 	int			endian;
 }				t_win;
 
-typedef struct	s_point // структура для точки
+typedef struct	s_point 
 {
 	float			x;
 	float			y;
 }				t_point;
 
-typedef struct	s_sprite // структура для точки
+typedef struct	s_sprite 
 {
 	float			x;
 	float			y;
@@ -66,7 +74,7 @@ typedef struct	s_sprite // структура для точки
 }				t_sprite;
 
 
-typedef struct	s_plr //структура для игрока и луча
+typedef struct	s_plr 
 {
 	float		x;
 	float		y;
@@ -82,19 +90,18 @@ typedef struct	s_texture
 	void		*image;
 	int			img_width;
 	int			img_height;
-	//unsigned int		*addr;
 	void *addr;
 	int			bits_per_pixel;
 	int			line_length; 
 	int			endian;
 }				t_texture;
 
-typedef struct	s_all // структура для всего вместе
+typedef struct	s_all 
 {
 	t_win		*win;
 	t_plr		*plr;
 	t_point		*point;
-	t_map		*mapInfo;
+	t_map		*mapinfo;
 	t_texture	text[5];
 	t_sprite	*sprites;
 	float 		*dist_wall;
@@ -110,7 +117,6 @@ int 	ft_get_color(char **map, char *identifier);
 char	**ft_get_map(char **map);
 void	ft_start_game(t_map mapInfo, int savebmp);
 int		key_press(int keycode, t_all * all);
-int		key_release(int keycode, t_all * all);
 t_plr	ft_get_plr_info(t_map mapInfo);
 t_all	ft_get_all_info(t_plr plr, t_map mapInfo, t_win data, t_point point);
 void	ft_cast_rays(t_all *all);

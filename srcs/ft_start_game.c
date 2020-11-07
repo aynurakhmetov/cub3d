@@ -6,7 +6,7 @@
 /*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 13:07:41 by gmarva            #+#    #+#             */
-/*   Updated: 2020/10/26 13:07:46 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:12:47 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int ft_finish_game(t_all *all)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_start_game(t_map mapInfo, int savebmp)
+void	ft_start_game(t_map mapinfo, int savebmp)
 {
     t_win data;
     t_plr plr;
@@ -56,26 +56,26 @@ void	ft_start_game(t_map mapInfo, int savebmp)
     t_sprite *sprite;
     point.x = 0;
     point.y = 0;
-    plr = ft_get_plr_info(mapInfo);
-    sprite = ft_get_sprite_info(mapInfo);
+    plr = ft_get_plr_info(mapinfo);
+    sprite = ft_get_sprite_info(mapinfo);
     data.mlx = mlx_init();
-    data.win = mlx_new_window(data.mlx, mapInfo.xRenderSize, 
-                mapInfo.yRenderSize, "CUB");
-    all = ft_get_all_info(plr, mapInfo, data, point);
-    all.win->img = mlx_new_image(all.win->mlx, all.mapInfo->xRenderSize, all.mapInfo->yRenderSize);
+    data.win = mlx_new_window(data.mlx, mapinfo.xrendersize, 
+                mapinfo.yrendersize, "CUB");
+    all = ft_get_all_info(plr, mapinfo, data, point);
+    all.win->img = mlx_new_image(all.win->mlx, all.mapinfo->xrendersize, all.mapinfo->yrendersize);
     all.win->addr = (unsigned int*)mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length, &all.win->endian);
-    all.text[1].image = mlx_xpm_file_to_image(all.win->mlx, all.mapInfo->northTexture, &all.text[1].img_width, &all.text[1].img_height);
+    all.text[1].image = mlx_xpm_file_to_image(all.win->mlx, all.mapinfo->northtexture, &all.text[1].img_width, &all.text[1].img_height);
     all.text[1].addr = (unsigned int*)mlx_get_data_addr(all.text[1].image, &all.text[1].bits_per_pixel, &all.text[1].line_length, &all.text[1].endian);
-    all.text[2].image = mlx_xpm_file_to_image(all.win->mlx, all.mapInfo->southTexture, &all.text[2].img_width, &all.text[2].img_height);
+    all.text[2].image = mlx_xpm_file_to_image(all.win->mlx, all.mapinfo->southtexture, &all.text[2].img_width, &all.text[2].img_height);
     all.text[2].addr = (unsigned int*)mlx_get_data_addr(all.text[2].image, &all.text[2].bits_per_pixel, &all.text[2].line_length, &all.text[2].endian);
-    all.text[3].image = mlx_xpm_file_to_image(all.win->mlx, all.mapInfo->westTexture, &all.text[3].img_width, &all.text[3].img_height);
+    all.text[3].image = mlx_xpm_file_to_image(all.win->mlx, all.mapinfo->westtexture, &all.text[3].img_width, &all.text[3].img_height);
     all.text[3].addr = (unsigned int*)mlx_get_data_addr(all.text[3].image, &all.text[3].bits_per_pixel, &all.text[3].line_length, &all.text[3].endian);
-    all.text[4].image = mlx_xpm_file_to_image(all.win->mlx, all.mapInfo->eastTexture, &all.text[4].img_width, &all.text[4].img_height);
+    all.text[4].image = mlx_xpm_file_to_image(all.win->mlx, all.mapinfo->easttexture, &all.text[4].img_width, &all.text[4].img_height);
     all.text[4].addr = (unsigned int*)mlx_get_data_addr(all.text[4].image, &all.text[4].bits_per_pixel, &all.text[4].line_length, &all.text[4].endian);
-    all.text[0].image = mlx_xpm_file_to_image(all.win->mlx, all.mapInfo->spriteTexture, &all.text[0].img_width, &all.text[0].img_height);
+    all.text[0].image = mlx_xpm_file_to_image(all.win->mlx, all.mapinfo->spritetexture, &all.text[0].img_width, &all.text[0].img_height);
     all.text[0].addr = (unsigned int*)mlx_get_data_addr(all.text[0].image, &all.text[0].bits_per_pixel, &all.text[0].line_length, &all.text[0].endian);
     all.sprites = sprite;
-    all.dist_wall = malloc(sizeof(float) * (all.mapInfo->xRenderSize + 1));
+    all.dist_wall = malloc(sizeof(float) * (all.mapinfo->xrendersize + 1));
     ft_render_next_frame(&all);
     if (savebmp == 1)
     {
@@ -84,5 +84,5 @@ void	ft_start_game(t_map mapInfo, int savebmp)
     }
     mlx_hook(data.win, 2, 1L << 0, key_press, &all);
 	mlx_hook(data.win, 17, 1, ft_finish_game, &all);
-    mlx_loop(data.mlx); // Рендеринг 
+    mlx_loop(data.mlx); 
 }
