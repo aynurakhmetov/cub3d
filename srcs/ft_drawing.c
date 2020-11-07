@@ -12,6 +12,13 @@
 
 #include "./../includes/cub3d.h"
 
+void    ft_draw(t_all *all, float i, float j, int color)
+{
+    unsigned int   *dst;
+    dst = all->win->addr + ((int)i * all->win->line_length + (int)j * (all->win->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
 void    ft_cub_2d(t_all *all)
 {
     float i;
@@ -102,7 +109,7 @@ int ft_get_wall_color(t_all *all, float y_draw, float x_draw, int start, int end
     return (0);
 }
 
-void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol)
+void    ft_draw_wall(t_all *all, t_plr ray, int i)
 {
     float distance;
     float perpendicular;
@@ -110,6 +117,10 @@ void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol)
     float start;
     float end;
     int wall_color;
+    float y_draw = ray.y;
+    float x_draw = ray.x;
+    float ugol = ray.start;
+    all->new_dir = ft_get_new_dir(ray, all); 
    
     distance = sqrt(pow(x_draw - all->plr->x, 2) + pow(y_draw - all->plr->y, 2)) * cos(ugol - all->plr->dir);
      all->dist_wall[i] = distance;
@@ -125,7 +136,6 @@ void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol)
         ft_draw(all, j, i, all->mapinfo->ceilingcolor);
         j++;
     }
-
     wall_color = ft_get_wall_color(all, y_draw, x_draw, start, end, i, height);
     while (end < all->mapinfo->yrendersize)
     {

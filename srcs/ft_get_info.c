@@ -12,34 +12,40 @@
 
 #include "./../includes/cub3d.h"
 
+
+float ft_get_dir_info(char **map, int i, int j)
+{
+    if (map[i][j] == 'N')
+        return(3.14 * 1.5);
+    if (map[i][j] == 'E') 
+        return(3.14 * 2);
+    if (map[i][j] == 'W') 
+        return(3.14);
+    if (map[i][j] == 'S')
+        return(3.14 / 2);
+    return (0);
+}
+
 t_plr   ft_get_plr_info(t_map mapinfo)
 {
     t_plr plr;
-    printf("GET PLR %d\n", mapinfo.xrendersize);
-    float i;
-    float j;
+    int i;
+    int j;
 
     i = 0;
-    while (mapinfo.map[(int)(i / SCALE)])
+    while (mapinfo.map[i])
     {
         j = 0;
-        while (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)])
+        while (mapinfo.map[i][j])
         {
-            if (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'N' || 
-                    mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'E' 
-                    || mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'W' 
-                    || mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'S')
+            if (mapinfo.map[i][j] == 'N' || 
+                    mapinfo.map[i][j] == 'E' 
+                    || mapinfo.map[i][j] == 'W' 
+                    || mapinfo.map[i][j] == 'S')
             {
-                plr.x = j + 31.5;
-                plr.y = i - 31.5;
-                if (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'N')
-                    plr.dir = 3.14 * 1.5;
-                if (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'E') 
-                    plr.dir = 3.14 * 2;
-                if (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'W') 
-                    plr.dir = 3.14;
-                if (mapinfo.map[(int)(i / SCALE)][(int)(j / SCALE)] == 'S')
-                    plr.dir = 3.14 / 2;
+                plr.x = j * 64 + 32;
+                plr.y = i * 64 + 32;
+                plr.dir = ft_get_dir_info(mapinfo.map, i, j);
                 break ;
             }
             j++;
@@ -49,63 +55,49 @@ t_plr   ft_get_plr_info(t_map mapinfo)
     return (plr);
 }
 
-t_sprite  *ft_get_sprite_info(t_map mapinfo)
+int ft_get_number_of_sprites(t_map mapinfo)
 {
-    t_sprite sprite;
-    float i;
-    float j;
-
+    int i;
+    int j;
+    int l;
+  
     i = 0;
-    int k = 0;
-    int l = 0;
-    int m = 0;
-    int sc = 1;
-    while (mapinfo.map[(int)(i / sc)])
+    l = 0;
+    while (mapinfo.map[i])
     {
         j = 0;
-        while (mapinfo.map[(int)(i / sc)][(int)(j / sc)])
+        while (mapinfo.map[i][j])
         {
-            m++;
-            if (mapinfo.map[(int)(i / sc)][(int)(j / sc)] == '2' && mapinfo.map[(int)(i / sc)][(int)(j / sc)] != '1')
-            {
-                sprite.x = j + 31.5;
-                sprite.y = i - 31.5;
-                k++;
-                if (k == sc * sc)
-                {
-                    l++;
-                    k = 0;
-                }               
-            }
+            if (mapinfo.map[i][j] == '2' && mapinfo.map[i][j] != '1')
+                l++;            
             j++;
         }
         i++;
     }
+    return (l);
+}
 
-    t_sprite *sprites = malloc(sizeof(t_sprite) * (l + 1)); 
-    int len = l;
+t_sprite  *ft_get_sprite_info(t_map mapinfo)
+{
+    int len;
+    int i;
+    int j;
+    int l;
 
+    len = ft_get_number_of_sprites(mapinfo);
+    t_sprite *sprites = malloc(sizeof(t_sprite) * (len + 1)); 
     i = 0;
-    k = 0;
     l = 0;
-    m = 0;
-   
-    while (mapinfo.map[(int)(i / sc)])
+    while (mapinfo.map[i])
     {
         j = 0;
-        while (mapinfo.map[(int)(i / sc)][(int)(j / sc)])
+        while (mapinfo.map[i][j])
         {
-            if (mapinfo.map[(int)(i / sc)][(int)(j / sc)] == '2' && mapinfo.map[(int)(i / sc)][(int)(j / sc)] != '1')
+            if (mapinfo.map[i][j] == '2' && mapinfo.map[i][j] != '1')
             {
-                k++;
-                if (k == sc * sc)
-                {
-                    sprites[l].len = len;
-                    sprites[l].x = j*64 + 32;
-                    sprites[l].y = i*64 + 32;
-                    l++;
-                    k = 0;
-                }
+                sprites[l].len = len;
+                sprites[l].x = j * 64 + 32;
+                sprites[l++].y = i * 64 + 32;
             }
             j++;
         }
@@ -114,14 +106,24 @@ t_sprite  *ft_get_sprite_info(t_map mapinfo)
     return (sprites);
 }
 
-t_all   ft_get_all_info(t_plr plr, t_map mapinfo, t_win data, t_point point)
+t_all   ft_get_all_info(t_map mapinfo, t_win data)
 {
     t_all all;
-    printf("GET ALL\n");
+    t_plr *plr;
+    t_point point;
+    t_sprite *sprite;
+
+    point.x = 0;
+    point.y = 0;
+    plr = malloc(sizeof(t_plr) * 1);
+    *plr = ft_get_plr_info(mapinfo);
+    sprite = ft_get_sprite_info(mapinfo);
     all.map = mapinfo.map;
-    all.plr = &plr;
+    all.plr = plr;
     all.win = &data;
     all.point = &point;
     all.mapinfo = &mapinfo;
+    all.sprites = sprite;
+    all.dist_wall = malloc(sizeof(float) * (all.mapinfo->xrendersize + 1));
     return (all);
 }

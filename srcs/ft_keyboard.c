@@ -16,10 +16,8 @@ int		key_press(int keycode, t_all *all)
 {
 	t_point m;
 
-
 	m.y = all->plr->y;
 	m.x = all->plr->x;
-
 	if (keycode == KEY_W)
     {
 		m.y += 32 * sin(all->plr->dir);
@@ -56,6 +54,5 @@ int		key_press(int keycode, t_all *all)
 		// Написать нормальную функцию закрывающуюся
 	}	
 	ft_render_next_frame(all);
-	ft_cub_2d(all);
 	return (0);
 }

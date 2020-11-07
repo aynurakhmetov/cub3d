@@ -12,14 +12,23 @@
 
 all:
 	gcc -Wall -Wextra -Werror libmlx.dylib -framework \
-	OpenGL -framework Appkit -o test \
-	./srcs/main.c ./srcs/ft_drawing.c ./srcs/ft_make_sprite.c ./srcs/ft_map_check.c \
-	./srcs/ft_map_parser.c ./srcs/ft_start_game.c ./srcs/ft_keyboard.c ./srcs/ft_get_info.c \
-	./srcs/ft_raycasting.c ./srcs/ft_make_screenshote.c \
+	OpenGL -framework Appkit -o cub3d \
+	./srcs/main.c \
+	./srcs/ft_map_parser.c \
+	./srcs/ft_map_parser_two.c \
+	./srcs/ft_map_check.c \
+	./srcs/ft_start.c \
+	./srcs/ft_get_info.c \
+	./srcs/ft_drawing.c \
+	./srcs/ft_raycasting.c \
+	./srcs/ft_make_sprite.c \
+	./srcs/ft_make_screenshote.c \
+	./srcs/ft_keyboard.c \
+	./srcs/ft_finish.c \
 	mylib/libft/libft.a mylib/gnl/get_next_line.c mylib/gnl/get_next_line_utils.c
 
 gcc: all
-	./test ./maps/map.cub
+	./cub3d ./maps/map.cub
 
 save: all
-	./test ./maps/map.cub --save
+	./cub3d ./maps/map.cub --save

@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define SCALE 64 // условный размер каждого квадратика в карте
+#ifndef CUB3D_H
+# define CUB3D_H
 
+#define SCALE 64
 #define FOV 3.14/3
-
 #define KEY_W 13
 #define KEY_A 0
 #define KEY_S 1
@@ -113,20 +114,27 @@ typedef struct	s_all
 
 int		ft_get_render_size(char **map, int numOfRes);
 char	*ft_get_texture(char **map, char *identifier);
-int 	ft_get_color(char **map, char *identifier);
+unsigned int 	ft_get_color(char **map, char *identifier);
 char	**ft_get_map(char **map);
+int ft_get_line_mumber(char **map, char *identifier);
 void	ft_start_game(t_map mapInfo, int savebmp);
 int		key_press(int keycode, t_all * all);
 t_plr	ft_get_plr_info(t_map mapInfo);
-t_all	ft_get_all_info(t_plr plr, t_map mapInfo, t_win data, t_point point);
+t_all   ft_get_all_info(t_map mapinfo, t_win data);
+int ft_finish_game(t_all *all);
 void	ft_cast_rays(t_all *all);
 void    ft_draw(t_all *all, float i, float j, int color);
 int     ft_render_next_frame(t_all *all);
 void	ft_cub_2d(t_all *all);
-void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol);
+void    ft_draw_wall(t_all *all, t_plr ray, int i);
 void 	my_mlx_pixel_put(t_all *all, int x, int y, int color);
 t_sprite  *ft_get_sprite_info(t_map mapInfo);
 void ft_draw_sprite_2(t_all *all);
 int				screenshot(t_all *all);
 void ft_draw_sprites(t_all *all);
 void ft_map_test(char **map);
+void ft_exit(char *errormassage);
+void ft_exit_identifier(char *errormassage, char *identifier);
+char	ft_get_new_dir(t_plr ray, t_all *all);
+
+#endif
