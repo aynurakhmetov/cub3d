@@ -40,12 +40,8 @@ t_plr   ft_get_plr_info(t_map mapInfo)
 t_sprite  *ft_get_sprite_info(t_map mapInfo)
 {
     t_sprite sprite;
-    //printf("GET PLR %d\n", mapInfo.xRenderSize);
     float i;
     float j;
-    // int i;
-    // int j;
-    //t_list *spritefind;
 
     i = 0;
     int k = 0;
@@ -62,16 +58,12 @@ t_sprite  *ft_get_sprite_info(t_map mapInfo)
             {
                 sprite.x = j + 31.5;
                 sprite.y = i - 31.5;
-                //printf ("1 sprite X Y %f %f\n", i, j);
                 k++;
                 if (k == sc * sc)
                 {
                     l++;
                     k = 0;
-                }
-                //break;
-                //ft_lstadd_back(&spritefind, &sprite);
-                
+                }               
             }
             j++;
         }
@@ -93,8 +85,6 @@ t_sprite  *ft_get_sprite_info(t_map mapInfo)
         {
             if (mapInfo.map[(int)(i / sc)][(int)(j / sc)] == '2' && mapInfo.map[(int)(i / sc)][(int)(j / sc)] != '1')
             {
-                
-                //printf ("1 sprite X Y %f %f\n", i, j);
                 k++;
                 if (k == sc * sc)
                 {
@@ -104,36 +94,11 @@ t_sprite  *ft_get_sprite_info(t_map mapInfo)
                     l++;
                     k = 0;
                 }
-                //break;
-                //ft_lstadd_back(&spritefind, &sprite);
             }
             j++;
         }
         i++;
     }
-
-    
-
-    printf("l = %d\n", l);
-
-    //  while (mapInfo.map[(int)(i)])
-    // {
-    //     j = 0;
-    //     while (mapInfo.map[(int)(i)][(int)(j)])
-    //     {
-    //         if (mapInfo.map[(int)(i)][(int)(j)] == '2')
-    //         {
-    //             sprite.x = j;
-    //             sprite.y = i;
-    //             printf ("1 sprite X Y %f %f\n", i, j);
-    //             break;
-    //             //ft_lstadd_back(&spritefind, &sprite);
-    //             //printf ("1 sprite X Y %f %f\n", i, j);
-    //         }
-    //         j++;
-    //     }
-    //     i++;
-    // }
     return (sprites);
 }
 
@@ -141,14 +106,10 @@ t_all   ft_get_all_info(t_plr plr, t_map mapInfo, t_win data, t_point point)
 {
     t_all all;
     printf("GET ALL\n");
-    //sprite = ft_get_sprite_info(mapInfo);
-    //all.sprite = &sprite;
     all.map = mapInfo.map;
     all.plr = &plr;
     all.win = &data;
     all.point = &point;
     all.mapInfo = &mapInfo;
-	//printf ("0 sprite X Y %f %f\n", all.sprite->y, all.sprite->x);
-
     return (all);
 }

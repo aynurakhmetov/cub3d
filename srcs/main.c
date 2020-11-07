@@ -12,11 +12,6 @@
 
 #include "./../includes/cub3d.h"
 
-/*
-** If any misconfiguration of any kind is encountered in the file, the program
-** must exit properly and return "Error\n" followed by an explicit error message
-** of your choice.
-*/
 char **make_map(t_list **head, int size)
 {
     char **map;
@@ -41,10 +36,6 @@ char **make_map(t_list **head, int size)
     return (map);
 }
 
-/*
-** Your program must take as a first argument a scene description file with the .cub
-** extension.
-*/
 t_map ft_map_parser(char *mapInput, int screenNeed)
 {
     t_map mapInfo;
@@ -67,7 +58,6 @@ t_map ft_map_parser(char *mapInput, int screenNeed)
     }
     ft_lstadd_back(&head, ft_lstnew(line));
     newMap = make_map(&head, ft_lstsize(head));
-    // почистить head
     if ((mapInfo.xRenderSize = ft_get_render_size(newMap, 1)) == -1)
     {
        ft_putendl_fd("ERROR MESSAGE: R", 1); 
@@ -87,10 +77,9 @@ t_map ft_map_parser(char *mapInput, int screenNeed)
     mapInfo.ceilingColor = ft_get_color(newMap, "C ");
     mapInfo.map = ft_get_map(newMap);
    
-    printf("%s %d\n", mapInput, screenNeed); // DELETE!!!
+    printf("%s %d\n", mapInput, screenNeed);
     free (newMap);
     return (mapInfo);
-    // check for leaks + закрыть чтение
 }
 
 int ft_map_error_test(t_map mapInfo)
@@ -157,7 +146,6 @@ int main(int argc, char *argv[])
             return (0);
         }
         ft_start_game(mapInfo, 1);
-        //printf("%s\n", argv[2]); // DELETE!!!!
     }
     else if (argc == 2) 
     {
@@ -173,7 +161,6 @@ int main(int argc, char *argv[])
         ft_putendl_fd("ERROR MESSAGE: problems with arguments in the input", 1);
         return (0);
     }
-    // Про Скриншот помнить
     return (0);
 }
 

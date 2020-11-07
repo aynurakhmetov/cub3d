@@ -12,16 +12,6 @@
 
 #include "./../includes/cub3d.h"
 
-/*
-** 1. Except for the map content, each type of element can be separated by one or more empty line (s).
-** 2. Except for the map content which always has to be the last, 
-** each type of element can be set in any order in the file.
-** 3. Except for the map, each type of information from an element can be separated by one or more space (s).
-** 4. Each element (except the map) firsts information is the type identifier 
-** (composed by one or two character (s)), followed by all specific informations 
-** for each object in a strict order such as:
-*/
-
 int ft_get_line_mumber(char **map, char *identifier)
 {
     int i;
@@ -77,16 +67,15 @@ int ft_get_render_size(char **map, int numOfRes)
         ft_putendl_fd("ERROR MESSAGE: r < 0", 1);
         return (-1);
     }
-    if (r_num_1 > 2560) //2560 x 1440
+    if (r_num_1 > 2560) 
         r_num_1 = 2560;
-    if (r_num_2 > 1440) //2560 x 1440
+    if (r_num_2 > 1440) 
         r_num_2 = 1440;
     if (numOfRes == 1)
         return (r_num_1);
     if (numOfRes == 2)
         return (r_num_2);
     return (-1);
-    // Проверить на лики при атои
 }
 
 

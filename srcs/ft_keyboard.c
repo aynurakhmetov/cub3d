@@ -41,9 +41,7 @@ int		key_press(int keycode, t_all *all)
 		m.x -= 32 * sin(all->plr->dir);	
 	}
 	if (all->map[(int)(m.y/ SCALE)][(int)(m.x/ SCALE)] != '1' && all->map[(int)(m.y/ SCALE)][(int)(m.x / SCALE)] != '2' )
-	// && (all->map[(int)(m.y/ SCALE)][(int)(m.x / SCALE)] == '0' || all->map[(int)(m.y/ SCALE)][(int)(m.x / SCALE)] == 'N'))
 	{
-		//printf("ya tut 0\n");
         all->plr->y = m.y;
 		all->plr->x = m.x;
 	}	
@@ -61,24 +59,3 @@ int		key_press(int keycode, t_all *all)
 	ft_cub_2d(all);
 	return (0);
 }
-
-/*
-int		key_release(int keycode, t_all *all)
-{
-	if (keycode == KEY_W)
-        all->point->x += 0;
-	if (keycode ==KEY_S)
-		printf("KEYCODE WORK\n");
-	if (keycode == KEY_A)
-	    printf("KEYCODE WORK\n");
-	if (keycode == KEY_D)
-	    printf("KEYCODE WORK\n");	
-	if (keycode == KEY_LEFT)
-	    printf("KEYCODE WORK\n");	
-	if (keycode == KEY_RIGHT)
-	    printf("KEYCODE WORK\n");	
-	if (keycode == KEY_ESCAPE)
-	    printf("KEYCODE WORK\n");	
-	return (0);
-}
-*/

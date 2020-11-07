@@ -119,7 +119,6 @@ int     ft_render_next_frame(t_all *all);
 void	ft_cub_2d(t_all *all);
 void    ft_draw_wall(t_all *all, float y_draw, float x_draw, int i, float ugol);
 void 	my_mlx_pixel_put(t_all *all, int x, int y, int color);
-void	ft_draw_sprite(t_all *all, float y_draw, float x_draw, int i, float ugol, t_plr ray);
 t_sprite  *ft_get_sprite_info(t_map mapInfo);
 void ft_draw_sprite_2(t_all *all);
 int				screenshot(t_all *all);
