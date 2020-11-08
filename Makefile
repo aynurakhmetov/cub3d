@@ -19,8 +19,9 @@ all:
 	./srcs/ft_map_check.c \
 	./srcs/ft_start.c \
 	./srcs/ft_get_info.c \
-	./srcs/ft_drawing.c \
 	./srcs/ft_raycasting.c \
+	./srcs/ft_drawing.c \
+	./srcs/ft_make_wall.c \
 	./srcs/ft_make_sprite.c \
 	./srcs/ft_make_screenshote.c \
 	./srcs/ft_keyboard.c \

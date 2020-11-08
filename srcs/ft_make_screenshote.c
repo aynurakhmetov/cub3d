@@ -16,6 +16,7 @@ static	int		make_head(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		size;
+	
 	size = 14 + 40 + all->mapinfo->xrendersize * all->mapinfo->yrendersize
 			* all->win->bits_per_pixel / 8;
 	bmp_head[0] = 'B';
@@ -38,13 +39,15 @@ static	int		make_head(unsigned char *bmp_head,
 	bmp_fhead[14] = (unsigned char)(all->win->bits_per_pixel);
 	return (1);
 }
-static int		make_file_screen(unsigned char *bmp_head,
+
+static int		ft_make_file_screen(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		fd;
 	char	*filename;
 	int		i;
 	int		size;
+
 	i = 0;
 	filename = "screenshot.bmp";
 	if ((fd = open(filename, O_RDWR | O_CREAT, 0777)) < 0)
@@ -59,16 +62,18 @@ static int		make_file_screen(unsigned char *bmp_head,
 	}
 	return (1);
 }
-int				screenshot(t_all *all)
+
+int				ft_screenshot(t_all *all)
 {
 	unsigned char	bmp_head[14];
 	unsigned char	bmp_fhead[40];
-	ft_putstr_fd("Saving screenshot\n", 0);
+
+	ft_putendl_fd("screenshot saved", 1);
 	ft_bzero(bmp_head, 14);
 	ft_bzero(bmp_fhead, 40);
 	make_head(bmp_head, bmp_fhead, all);
-	if (!(make_file_screen(bmp_head, bmp_fhead, all)))
-		ft_putstr_fd("Fuck ur screen, that shit\n", 0);
+	if (!(ft_make_file_screen(bmp_head, bmp_fhead, all)))
+		ft_putendl_fd("Problem with screenshot saving", 1);
 	mlx_destroy_window(all->win->mlx, all->win->win);
 	exit(0);
 	return (0);

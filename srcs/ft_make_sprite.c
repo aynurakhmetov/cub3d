@@ -12,20 +12,12 @@
 
 #include "./../includes/cub3d.h"
 
-void ft_draw_sprites(t_all *all)
+void ft_sprite_sorting(t_all *all, int len)
 {
 	int i;
 	int j;
-
-	i = 0;
 	t_sprite tmp;
-	int len = all->sprites[0].len;
-	while (i < len)
-	{
-		all->sprites[i].dist = sqrt(pow(all->sprites[i].x - all->plr->x, 2) + pow(all->sprites[i].y - all->plr->y, 2));
-		tmp = all->sprites[i];
-		i++;
-	}
+
 	i = 0;
 	while (i < len)
 	{
@@ -42,66 +34,93 @@ void ft_draw_sprites(t_all *all)
 		}
 		i++;
 	}
+}
 
+t_spriteinfo ft_get_one_sprite_info(t_all *all)
+{
+
+	t_spriteinfo sprite;
+
+	sprite.dir = atan2(all->text[0].y - all->plr->y, all->text[0].x - all->plr->x);
+	while (sprite.dir - all->plr->dir >  M_PI)
+		sprite.dir -= 2 * M_PI; 
+    while (sprite.dir - all->plr->dir < - M_PI)
+		sprite.dir += 2 * M_PI;
+	sprite.dir -= all->plr->dir;
+    sprite.distance = sqrt(pow(all->text[0].x - all->plr->x, 2) + pow(all->text[0].y - all->plr->y, 2)); 
+    sprite.screen_size = (SCALE / sprite.distance) * (all->mapinfo->xrendersize / 2) / tan(FOV/2);
+	sprite.h_offset = all->mapinfo->xrendersize /
+		(FOV * (180 / M_PI)) * ((180 / M_PI * sprite.dir) + 30) - sprite.screen_size / 2;
+    sprite.v_offset = all->mapinfo->yrendersize / 2 - sprite.screen_size / 2;
+	sprite.step = all->text[0].img_height / sprite.screen_size;
+	sprite.pos = 0;
+	return(sprite);
+}
+
+void ft_j_count(t_all *all, t_spriteinfo *sprite, float i)
+{
+	char *color;
+	float j;
+
+	j = 0;
+	sprite->x = i / sprite->screen_size * all->text[0].img_width;
+	sprite->pos = 0;
+    while (j < sprite->screen_size) 
+	{
+		sprite->y = (unsigned int)sprite->pos & (all->text[0].img_height - 1);
+		color = ft_get_texture_color(all, sprite->y, sprite->x , 0);
+        if (sprite->v_offset + j < 0 || sprite->v_offset + j > all->mapinfo->yrendersize)
+		{
+			j++;
+			continue;
+		}
+       	if (*(int *)color)
+			ft_draw(all,  sprite->v_offset + j, sprite->h_offset + i, *(int *)color);
+			sprite->pos += sprite->step;
+		j++;
+    }
+}
+
+void ft_draw_one_sprite(t_all *all)
+{   
+	float i;
+	t_spriteinfo sprite;
+
+	i = 0;
+	sprite = ft_get_one_sprite_info(all);
+	while (i < sprite.screen_size)
+	{
+        if (sprite.h_offset + i < 0 || sprite.h_offset + i >= all->mapinfo->xrendersize
+			|| all->dist_wall[(int)(sprite.h_offset + i)] < sprite.distance )
+		{
+			i++;
+			continue;
+		}
+		ft_j_count(all, &sprite, i);
+		i++;
+	}
+}
+
+void ft_draw_sprites(t_all *all)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = all->spritelen;
+	while (i < len)
+	{
+		all->sprites[i].dist = sqrt(pow(all->sprites[i].x - all->plr->x, 2) +
+			pow(all->sprites[i].y - all->plr->y, 2));
+		i++;
+	}
+	ft_sprite_sorting(all, len);
 	i = 0;
 	while (i < len)
 	{
 		all->text[0].y = all->sprites[i].y;
 		all->text[0].x = all->sprites[i].x;
-		ft_draw_sprite_2(all);
-		i++;
-	}
-
-}
-
-void ft_draw_sprite_2(t_all *all)
-{   
-	float sprite_dir;
-	char *color;
-
-	sprite_dir = atan2(all->text[0].y - all->plr->y, all->text[0].x - all->plr->x);
-	while (sprite_dir - all->plr->dir >  M_PI) sprite_dir -= 2*M_PI; 
-    while (sprite_dir - all->plr->dir < -M_PI) sprite_dir += 2*M_PI;
-	sprite_dir -= all->plr->dir;
-    float sprite_dist = sqrt(pow(all->text[0].x - all->plr->x, 2) + pow(all->text[0].y - all->plr->y, 2)); 
-    float sprite_screen_size = (SCALE / sprite_dist) * (all->mapinfo->xrendersize / 2) / tan(FOV/2);
-	int h_offset = all->mapinfo->xrendersize/ (FOV * (180 / M_PI)) * ((180 / M_PI * sprite_dir) + 30) - sprite_screen_size / 2;
-    int v_offset = all->mapinfo->yrendersize / 2 - sprite_screen_size / 2;
-	float j = 0;
-	float i = 0;
-	float step; 
-	step = all->text[0].img_height / sprite_screen_size;
-	int				tex_y;
-	int				tex_x;
-	float			tex_pos = 0;
-	tex_pos = 0;
-
-	while (i < sprite_screen_size)
-	{
-        if (h_offset + i < 0 || h_offset + i >= all->mapinfo->xrendersize || all->dist_wall[(int)(h_offset + i)] < sprite_dist )
-		{
-			i++;
-			continue;
-		}
-		tex_x = i / sprite_screen_size * all->text[0].img_width;
-		tex_pos = 0;
-		j = 0;
-        while (j < sprite_screen_size) 
-		{
-			tex_y = (unsigned int)tex_pos & (all->text[0].img_height - 1);
-			color = all->text[0].addr + ((int)tex_y * all->text[0].line_length + ((int)(tex_x ) * (all->text[0].bits_per_pixel/ 8)));
-            if (v_offset + j < 0 || v_offset + j > all->mapinfo->yrendersize)
-			{
-				j++;
-				continue;
-			}
-			tex_pos += step;
-        	if (*(int *)color)
-			{
-				ft_draw(all,  v_offset + j, h_offset +  i, *(int *)color);
-			}	
-			j++;
-        }
+		ft_draw_one_sprite(all);
 		i++;
 	}
 }

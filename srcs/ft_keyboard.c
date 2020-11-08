@@ -12,36 +12,45 @@
 
 #include "./../includes/cub3d.h"
 
-int		key_press(int keycode, t_all *all)
+t_point	ft_get_new_plr(int keycode, t_all *all)
 {
-	t_point m;
+	t_point new;
 
-	m.y = all->plr->y;
-	m.x = all->plr->x;
+	new.y = all->plr->y;
+	new.x = all->plr->x;
 	if (keycode == KEY_W)
     {
-		m.y += 32 * sin(all->plr->dir);
-		m.x += 32 * cos(all->plr->dir);
+		new.y += 32 * sin(all->plr->dir);
+		new.x += 32 * cos(all->plr->dir);
     }
 	if (keycode == KEY_S)
 	{
-        m.y -= 32 * sin(all->plr->dir);
-		m.x -= 32 * cos(all->plr->dir);
+        new.y -= 32 * sin(all->plr->dir);
+		new.x -= 32 * cos(all->plr->dir);
 	}
 	if (keycode == KEY_A)
 	{
-        m.y -= 32 * cos(all->plr->dir);
-		m.x += 32 * sin(all->plr->dir);
+        new.y -= 32 * cos(all->plr->dir);
+		new.x += 32 * sin(all->plr->dir);
 	}
 	if (keycode == KEY_D)
 	{
-        m.y += 32 * cos(all->plr->dir);
-		m.x -= 32 * sin(all->plr->dir);	
+        new.y += 32 * cos(all->plr->dir);
+		new.x -= 32 * sin(all->plr->dir);	
 	}
-	if (all->map[(int)(m.y/ SCALE)][(int)(m.x/ SCALE)] != '1' && all->map[(int)(m.y/ SCALE)][(int)(m.x / SCALE)] != '2' )
+	return (new);
+}
+
+int		key_press(int keycode, t_all *all)
+{
+	t_point new;
+
+	new = ft_get_new_plr(keycode, all);
+	if (all->map[(int)(new.y/ SCALE)][(int)(new.x/ SCALE)] != '1'
+		&& all->map[(int)(new.y/ SCALE)][(int)(new.x / SCALE)] != '2' )
 	{
-        all->plr->y = m.y;
-		all->plr->x = m.x;
+        all->plr->y = new.y;
+		all->plr->x = new.x;
 	}	
 	if (keycode == KEY_LEFT)
 	    all->plr->dir -= 0.1;
@@ -50,8 +59,7 @@ int		key_press(int keycode, t_all *all)
 	if (keycode == KEY_ESCAPE)
 	{
 		mlx_destroy_window(all->win->mlx, all->win->win);
-		exit(0);
-		// Написать нормальную функцию закрывающуюся
+		ft_finish_game(all);
 	}	
 	ft_render_next_frame(all);
 	return (0);

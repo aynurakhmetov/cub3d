@@ -14,7 +14,6 @@
 # define CUB3D_H
 
 #define SCALE 64
-#define FOV 3.14/3
 #define KEY_W 13
 #define KEY_A 0
 #define KEY_S 1
@@ -32,6 +31,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+
+#define FOV M_PI/3
 
 typedef struct	s_map 
 {
@@ -65,6 +66,19 @@ typedef struct	s_point
 	float			y;
 }				t_point;
 
+typedef struct s_wall
+{
+	float distance;
+    float perpendicular;
+    float height;
+    float start;
+    float end;
+    float y_draw;
+    float x_draw;
+    float angle;
+	unsigned int wall_color;
+}	t_wall;
+
 typedef struct	s_sprite 
 {
 	float			x;
@@ -74,6 +88,21 @@ typedef struct	s_sprite
 	int				len;
 }				t_sprite;
 
+typedef struct s_spriteinfo
+{
+	float i;
+	float j;
+	float distance;
+	float dir;
+	float screen_size;
+	float step; 
+	float	pos;
+	char *color;
+	int h_offset;
+	int v_offset;
+	int		y;
+	int		x;
+}	t_spriteinfo;
 
 typedef struct	s_plr 
 {
@@ -108,7 +137,7 @@ typedef struct	s_all
 	float 		*dist_wall;
 	char		**map;
 	char		new_dir;
-	int			texlen;
+	int			spritelen;
 }				t_all;
 
 
@@ -130,11 +159,12 @@ void    ft_draw_wall(t_all *all, t_plr ray, int i);
 void 	my_mlx_pixel_put(t_all *all, int x, int y, int color);
 t_sprite  *ft_get_sprite_info(t_map mapInfo);
 void ft_draw_sprite_2(t_all *all);
-int				screenshot(t_all *all);
+int				ft_screenshot(t_all *all);
 void ft_draw_sprites(t_all *all);
 void ft_map_test(char **map);
 void ft_exit(char *errormassage);
 void ft_exit_identifier(char *errormassage, char *identifier);
 char	ft_get_new_dir(t_plr ray, t_all *all);
+char *ft_get_texture_color(t_all *all, int h, int w, int textmum);
 
 #endif

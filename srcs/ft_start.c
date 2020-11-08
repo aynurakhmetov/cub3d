@@ -15,8 +15,8 @@
 int     ft_render_next_frame(t_all *all)
 {
 	ft_cast_rays(all);
-	ft_cub_2d(all);
 	//ft_draw_sprites(all);
+	//ft_cub_2d(all);
 	mlx_put_image_to_window(all->win->mlx, all->win->win, all->win->img, 0, 0);
 	return (0);
 }
@@ -61,9 +61,8 @@ void	ft_start_game(t_map mapinfo, int savebmp)
 	ft_render_next_frame(&all);
 	if (savebmp == 1)
 	{
-		screenshot(&all);
+		ft_screenshot(&all);
 		ft_finish_game(&all);
-		exit(0);
 	}
 	mlx_hook(data.win, 2, 1L << 0, key_press, &all);
 	mlx_hook(data.win, 17, 1, ft_finish_game, &all);

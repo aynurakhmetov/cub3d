@@ -124,6 +124,7 @@ t_all   ft_get_all_info(t_map mapinfo, t_win data)
     all.point = &point;
     all.mapinfo = &mapinfo;
     all.sprites = sprite;
+    all.spritelen = sprite[0].len;
     all.dist_wall = malloc(sizeof(float) * (all.mapinfo->xrendersize + 1));
     return (all);
 }
