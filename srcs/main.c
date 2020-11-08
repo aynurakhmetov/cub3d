@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 21:45:13 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:14:13 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 19:02:06 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ t_map	ft_map_parser(char *mapinput)
 	ft_lstadd_back(&head, ft_lstnew(line));
 	newmap = ft_make_map(&head, ft_lstsize(head));
 	mapinfo = ft_get_map_info(newmap);
-	free(newmap);
+	free(line);
+	ft_lstclear_here(&head);
+	free(head);
 	return (mapinfo);
 }
 

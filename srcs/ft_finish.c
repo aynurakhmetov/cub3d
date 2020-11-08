@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:47:26 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 17:59:23 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 19:04:35 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,30 @@ int		ft_finish_game(t_all *all)
 		free(all->map[i]);
 	}
 	exit(0);
+}
+
+void	ft_lstclear_here(t_list **lst)
+{
+	t_list	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		//free((*lst)->content);
+		free(*lst);
+		(*lst) = tmp;
+	}
+}
+
+void	ft_free_array(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	//free(str);
 }

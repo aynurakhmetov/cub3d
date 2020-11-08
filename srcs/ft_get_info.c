@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_info.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:13:01 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:13:06 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 18:49:15 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ t_plr		ft_get_plr_info(t_map mapinfo)
 		j = 0;
 		while (mapinfo.map[i][j])
 		{
-			if (mapinfo.map[i][j] == 'N'
-			|| mapinfo.map[i][j] == 'E'
-			|| mapinfo.map[i][j] == 'W'
-			|| mapinfo.map[i][j] == 'S')
+			if (mapinfo.map[i][j] == 'N' || mapinfo.map[i][j] == 'E'
+			|| mapinfo.map[i][j] == 'W' || mapinfo.map[i][j] == 'S')
 			{
 				plr.x = j * 64 + 32;
 				plr.y = i * 64 + 32;
@@ -51,6 +49,8 @@ t_plr		ft_get_plr_info(t_map mapinfo)
 		}
 		i++;
 	}
+	if ((plr.x - 32 / 64) != j)
+		ft_exit("player not found");
 	return (plr);
 }
 

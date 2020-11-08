@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:14:29 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:14:36 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 19:01:07 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,6 @@ int				ft_screenshot(t_all *all);
 void			ft_exit(char *errormassage);
 void			ft_exit_identifier(char *errormassage, char *identifier);
 int				ft_finish_game(t_all *all);
-
+void			ft_lstclear_here(t_list **lst);
+void			ft_free_array(char **str);
 #endif

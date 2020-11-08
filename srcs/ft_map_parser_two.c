@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map_parser_two.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 19:41:50 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 19:41:52 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 18:48:14 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ unsigned int	ft_create_trgb(char **str)
 	int	r;
 	int	g;
 	int	b;
+	int i;
 
 	t = 0;
 	r = ft_atoi(str[0]);
@@ -25,6 +26,10 @@ unsigned int	ft_create_trgb(char **str)
 	b = ft_atoi(str[2]);
 	if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255)
 		ft_exit("color entered incorrectly");
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 

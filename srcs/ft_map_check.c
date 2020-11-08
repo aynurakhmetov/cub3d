@@ -18,9 +18,13 @@ void	ft_neighbors_cheсk(char **map, int i, int j)
 		ft_exit("the wall is not closed");
 	if (!map[i][j - 1] || map[i][j - 1] == ' ')
 		ft_exit("the wall is not closed");
-	if (!map[i + 1][j] || map[i + 1][j] == ' ')
+	if (!map[i + 1])
 		ft_exit("the wall is not closed");
-	if (!map[i - 1][j] || map[i - 1][j] == ' ')
+	else if (map[i + 1][j] == ' ')
+		ft_exit("the wall is not closed");
+	if (!map[i - 1])
+		ft_exit("the wall is not closed");
+	else if (map[i - 1][j] == ' ')
 		ft_exit("the wall is not closed");
 	if (!map[i + 1][j + 1] || map[i + 1][j + 1] == ' ')
 		ft_exit("the wall is not closed");
