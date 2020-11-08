@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmarva <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/19 17:09:12 by gmarva            #+#    #+#              #
-#    Updated: 2020/11/07 18:15:13 by gmarva           ###   ########.fr        #
+#    Updated: 2020/11/08 18:06:02 by gmarva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,3 +33,6 @@ gcc: all
 
 save: all
 	./cub3d ./maps/map.cub --save
+
+norma:
+	norminette ./srcs/ ./mylib/libft/*.c ./mylib/libft/*.h ./mylib/gnl/ ./includes/

@@ -12,7 +12,7 @@
 
 #include "./../includes/cub3d.h"
 
-void ft_neighbors_cheсk(char **map, int i, int j)
+void	ft_neighbors_cheсk(char **map, int i, int j)
 {
 	if (!map[i][j + 1] || map[i][j + 1] == ' ')
 		ft_exit("the wall is not closed");
@@ -32,7 +32,7 @@ void ft_neighbors_cheсk(char **map, int i, int j)
 		ft_exit("the wall is not closed");
 }
 
-void ft_line_of_spaces_chek(char *lineofmap)
+void	ft_line_of_spaces_chek(char *lineofmap)
 {
 	int j;
 	int k;
@@ -49,7 +49,7 @@ void ft_line_of_spaces_chek(char *lineofmap)
 		ft_exit("empty line in map");
 }
 
-void ft_spaces_in_line_chek(char *lineofmap, int j)
+void	ft_spaces_in_line_chek(char *lineofmap, int j)
 {
 	int linestart;
 	int lineend;
@@ -58,15 +58,15 @@ void ft_spaces_in_line_chek(char *lineofmap, int j)
 	while (lineofmap[linestart])
 	{
 		if (lineofmap[linestart] == '1')
-			break;
+			break ;
 		linestart++;
 	}
 	lineend = linestart;
 	while (lineofmap[lineend++])
 	{
-		if (lineofmap[lineend] == '1' && (!lineofmap[lineend + 1] 
+		if (lineofmap[lineend] == '1' && (!lineofmap[lineend + 1]
 		|| lineofmap[lineend + 1] == ' '))
-			break;
+			break ;
 	}
 	while (linestart < lineend)
 	{
@@ -77,18 +77,18 @@ void ft_spaces_in_line_chek(char *lineofmap, int j)
 		ft_spaces_in_line_chek(lineofmap, lineend + 1);
 }
 
-void ft_map_test(char **map)
+void	ft_map_test(char **map)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		j = 0;
 		ft_line_of_spaces_chek(map[i]);
 		ft_spaces_in_line_chek(map[i], j);
-		while(map[i][j])
+		while (map[i][j])
 		{
 			if (map[i][j] == '0' || map[i][j] == '2'
 			|| map[i][j] == 'N' || map[i][j] == 'W'

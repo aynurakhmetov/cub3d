@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_screenshote.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:13:26 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:13:37 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/08 17:58:15 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	int		make_head(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		size;
-	
+
 	size = 14 + 40 + all->mapinfo->xrendersize * all->mapinfo->yrendersize
 			* all->win->bits_per_pixel / 8;
 	bmp_head[0] = 'B';
