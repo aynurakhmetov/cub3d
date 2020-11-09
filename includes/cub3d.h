@@ -141,6 +141,8 @@ unsigned int	ft_get_color(char **map, char *identifier);
 char			**ft_get_map(char **map);
 int				ft_get_line_mumber(char **map, char *identifier);
 void			ft_map_test(char **map);
+void			ft_color_garbage_check_next(char *cstr);
+void			ft_texture_garbage_chek(char *tstr, char *identifier);
 void			ft_start_game(t_map mapinfo, int savebmp);
 int				ft_key_press(int keycode, t_all *all);
 t_plr			ft_get_plr_info(t_map mapinfo);

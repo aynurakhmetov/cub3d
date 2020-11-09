@@ -33,6 +33,39 @@ unsigned int	ft_create_trgb(char **str)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
+void		ft_color_garbage_check(char *cstr, char c)
+{
+	int i;
+	int k;
+
+	i = -1;
+	k = 0;
+	while (cstr[++i] != 0)
+	{
+		if ((cstr[i] < '0' || cstr[i] > '9') && cstr[i] != ' '
+		&& cstr[i] != '-' && cstr[i] != '+' && cstr[i] != c
+		&& cstr[i] != ',')
+			ft_exit("garbage in c");
+		if ((cstr[i] == '+' || cstr[i] == '-')
+		&& (cstr[i + 1] < '0' || cstr[i + 1] > '9'))
+			ft_exit("garbage in C");
+		if (cstr[i] == c)
+			k++;
+		if (k > 1)
+			ft_exit("garbage in C");
+	}
+	ft_color_garbage_check_next(cstr);
+}
+
+void		ft_color_check(int j, char *cstr, char c)
+{
+	if (j > 3)
+		ft_exit("many color arguments");
+	if (j < 3)
+		ft_exit("few color arguments");
+	ft_color_garbage_check(cstr, c);
+}
+
 unsigned int	ft_get_color(char **map, char *identifier)
 {
 	int		i;
@@ -52,13 +85,10 @@ unsigned int	ft_get_color(char **map, char *identifier)
 		}
 		j++;
 	}
-	i = 0;
-	while (color[i] != 0)
-		i++;
-	if (i > 3)
-		ft_exit("many color arguments");
-	if (i < 3)
-		ft_exit("missing color arguments");
+	j = 0;
+	while (color[j] != 0)
+		j++;
+	ft_color_check(j, map[i], identifier[0]);
 	return (ft_create_trgb(color));
 }
 
@@ -83,7 +113,12 @@ char			**ft_get_map(char **map)
 	}
 	newmap = (char **)malloc(sizeof(char *) * (i - start + 1));
 	i = 0;
-	while (map[start] != 0)
-		newmap[i++] = ft_strdup(map[start++]);
+	if (start != 0)
+	{
+		while (map[start] != 0)
+			newmap[i++] = ft_strdup(map[start++]);
+	}
+	else
+		ft_exit("map not found");
 	return (newmap);
 }

@@ -15,25 +15,33 @@
 void	ft_neighbors_cheсk(char **map, int i, int j)
 {
 	if (!map[i][j + 1] || map[i][j + 1] == ' ')
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed sp");
 	if (!map[i][j - 1] || map[i][j - 1] == ' ')
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed sl");
 	if (!map[i + 1])
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed n1");
 	else if (map[i + 1][j] == ' ')
-		ft_exit("the wall is not closed");
-	if (!map[i - 1])
-		ft_exit("the wall is not closed");
-	else if (map[i - 1][j] == ' ')
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed n2");
+	if (i == 0)
+		ft_exit("the wall is not closed v1");
+}
+
+void	ft_diagonals_check(char **map, int i, int j)
+{
 	if (!map[i + 1][j + 1] || map[i + 1][j + 1] == ' ')
-		ft_exit("the wall is not closed");
+	{
+		printf("%d %d %s c='%c'\n", i, j, map[i], map[i][j]);
+		ft_exit("the wall is not closed unp");
+	}
 	if (!map[i - 1][j - 1] || map[i - 1][j - 1] == ' ')
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed uvl");
 	if (!map[i + 1][j - 1] || map[i + 1][j - 1] == ' ')
-		ft_exit("the wall is not closed");
+	{
+		printf("%d %d %s %c\n", i, j, map[i], map[i][j]);
+		ft_exit("the wall is not closed unl");
+	}
 	if (!map[i - 1][j + 1] || map[i - 1][j + 1] == ' ')
-		ft_exit("the wall is not closed");
+		ft_exit("the wall is not closed uvp");
 }
 
 void	ft_line_of_spaces_chek(char *lineofmap)
@@ -97,7 +105,10 @@ void	ft_map_test(char **map)
 			if (map[i][j] == '0' || map[i][j] == '2'
 			|| map[i][j] == 'N' || map[i][j] == 'W'
 			|| map[i][j] == 'E' || map[i][j] == 'S')
+			{
 				ft_neighbors_cheсk(map, i, j);
+				//ft_diagonals_check(map, i, j);
+			}
 			j++;
 		}
 		i++;

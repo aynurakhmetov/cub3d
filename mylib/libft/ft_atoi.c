@@ -12,11 +12,24 @@
 
 #include "libft.h"
 
+static int ft_nb_test(long long nb, int k, int m, int i)
+{
+	if (i == m)
+		return (-1);
+	nb = nb * (k);
+	if (nb > 2147483647)
+		return (2147483647);
+	if (nb < -2147483648)
+		return (-2147483648);
+	return (nb);
+}
+
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	nb;
-	int	k;
+	int			i;
+	long long	nb;
+	int			k;
+	int 		m;
 
 	i = 0;
 	nb = 0;
@@ -30,11 +43,11 @@ int	ft_atoi(const char *str)
 			k = -1;
 		i++;
 	}
+	m = i;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		nb = nb * 10 + (str[i] - '0');
 		i++;
 	}
-	nb = nb * (k);
-	return (nb);
+	return (ft_nb_test(nb, k, m, i));
 }

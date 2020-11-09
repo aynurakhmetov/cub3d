@@ -18,10 +18,10 @@ void	ft_map_error_test(t_map mapinfo)
 	int j;
 	int k;
 
-	i = 0;
+	i = -1;
 	k = 0;
 	ft_map_test(mapinfo.map);
-	while (mapinfo.map[i])
+	while (mapinfo.map[++i])
 	{
 		j = -1;
 		while (mapinfo.map[i][++j])
@@ -35,10 +35,11 @@ void	ft_map_error_test(t_map mapinfo)
 			|| mapinfo.map[i][j] == 'W' || mapinfo.map[i][j] == 'S')
 				k++;
 		}
-		i++;
 	}
 	if (k > 1)
 		ft_exit("many players");
+	if (k == 0)
+		ft_exit("player not found");	
 }
 
 t_map	ft_get_map_info(char **newmap)

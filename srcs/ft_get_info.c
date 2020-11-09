@@ -49,8 +49,6 @@ t_plr		ft_get_plr_info(t_map mapinfo)
 		}
 		i++;
 	}
-	if ((plr.x - 32 / 64) != j)
-		ft_exit("player not found");
 	return (plr);
 }
 

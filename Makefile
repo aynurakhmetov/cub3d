@@ -16,6 +16,7 @@ all:
 	./srcs/main.c \
 	./srcs/ft_map_parser.c \
 	./srcs/ft_map_parser_two.c \
+	./srcs/ft_map_parser_three.c \
 	./srcs/ft_map_check.c \
 	./srcs/ft_start.c \
 	./srcs/ft_get_info.c \
