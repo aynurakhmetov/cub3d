@@ -95,7 +95,8 @@ t_sprite	*ft_get_sprite_info(t_map mapinfo)
 			{
 				sprites[l].len = len;
 				sprites[l].x = j * 64 + 32;
-				sprites[l++].y = i * 64 + 32;
+				sprites[l].y = i * 64 + 32;
+				l++;
 			}
 			j++;
 		}

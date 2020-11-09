@@ -51,6 +51,8 @@ t_spriteinfo	ft_get_one_sprite_info(t_all *all)
 	+ pow(all->text[0].y - all->plr->y, 2));
 	sprite.screen_size = (SCALE / sprite.distance)
 	* (all->mapinfo->xrendersize / 2) / tan(FOV / 2);
+	if (sprite.screen_size > all->mapinfo->yrendersize)
+		sprite.screen_size = all->mapinfo->yrendersize;
 	sprite.h_offset = all->mapinfo->xrendersize / (FOV * (180 / M_PI))
 	* ((180 / M_PI * sprite.dir) + 30) - sprite.screen_size / 2;
 	sprite.v_offset = all->mapinfo->yrendersize / 2 - sprite.screen_size / 2;
@@ -71,17 +73,21 @@ void			ft_j_count(t_all *all, t_spriteinfo *sprite, float i)
 	{
 		sprite->y = (unsigned int)sprite->pos & (all->text[0].img_height - 1);
 		color = ft_get_texture_color(all, sprite->y, sprite->x, 0);
+		//printf("ya tut 41.3.1.1\n");
 		if (sprite->v_offset + j < 0 || sprite->v_offset + j
 			> all->mapinfo->yrendersize)
 		{
 			j++;
 			continue;
 		}
+		//printf("ya tut 41.3.1.2\n");
 		if (*(int *)color)
 			ft_draw(all, sprite->v_offset + j, sprite->h_offset + i,
 			*(int *)color);
+		//printf("ya tut 41.3.1.3\n");
 		sprite->pos += sprite->step;
 		j++;
+		//printf("ya tut 41.3.1.4\n");
 	}
 }
 

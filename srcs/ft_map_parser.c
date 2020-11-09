@@ -16,8 +16,12 @@ int		ft_get_line_mumber(char **map, char *identifier)
 {
 	int i;
 	int j;
+	int k;
+	int m;
 
 	i = 0;
+	m = -1;
+	k = 0;
 	while (map[i] != 0)
 	{
 		j = 0;
@@ -25,14 +29,16 @@ int		ft_get_line_mumber(char **map, char *identifier)
 		{
 			if (ft_strncmp(&map[i][j], identifier, ft_strlen(identifier)) == 0)
 			{
-				return (i);
-				break ;
+				m = i;
+				k++;
+				if (k > 1)
+					ft_exit("many identifier");
 			}
 			j++;
 		}
 		i++;
 	}
-	return (-1);
+	return (m);
 }
 
 int		ft_render_cheсk(int r_num_1, int r_num_2, int numofres)

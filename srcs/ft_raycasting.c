@@ -98,7 +98,7 @@ void	ft_cast_rays(t_all *all)
 		{
 			ray.x += cos(ray.start);
 			ray.y += sin(ray.start);
-			//ft_draw(all, ray.y / (SCALE / 10.0), ray.x / (SCALE / 10.0), 0x00990099);
+			ft_draw(all, ray.y / (SCALE / 10.0), ray.x / (SCALE / 10.0), 0x00990099);
 		}
 		if (all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] == '2')
 			ft_draw_wall_after_sprite(all, ray, i);

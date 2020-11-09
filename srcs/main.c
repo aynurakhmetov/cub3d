@@ -21,10 +21,10 @@ void	ft_map_error_test(t_map mapinfo)
 	i = -1;
 	k = 0;
 	ft_map_test(mapinfo.map);
-	while (mapinfo.map[++i])
+	while (mapinfo.map[++i] != 0)
 	{
 		j = -1;
-		while (mapinfo.map[i][++j])
+		while (mapinfo.map[i][++j] != 0)
 		{
 			if (mapinfo.map[i][j] != 'N' && mapinfo.map[i][j] != 'E'
 			&& mapinfo.map[i][j] != 'W' && mapinfo.map[i][j] != 'S'
@@ -97,6 +97,7 @@ t_map	ft_map_parser(char *mapinput)
 	ft_lstadd_back(&head, ft_lstnew(line));
 	newmap = ft_make_map(&head, ft_lstsize(head));
 	mapinfo = ft_get_map_info(newmap);
+	ft_map_error_test(mapinfo);
 	free(line);
 	ft_lstclear_here(&head);
 	free(head);
@@ -112,13 +113,11 @@ int		main(int argc, char *argv[])
 	if (argc == 3 && ft_strncmp(argv[2], "--save", ft_strlen(argv[2])) == 0)
 	{
 		mapinfo = ft_map_parser(argv[1]);
-		ft_map_error_test(mapinfo);
 		ft_start_game(mapinfo, 1);
 	}
 	else if (argc == 2)
 	{
 		mapinfo = ft_map_parser(argv[1]);
-		ft_map_error_test(mapinfo);
 		ft_start_game(mapinfo, 0);
 	}
 	else

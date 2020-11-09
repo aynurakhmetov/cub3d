@@ -92,6 +92,29 @@ unsigned int	ft_get_color(char **map, char *identifier)
 	return (ft_create_trgb(color));
 }
 
+int			ft_newmap_garbage_check(char *str)
+{
+	int j;
+
+	j = 0;
+	if (ft_strchr(str, 'R') || ft_strchr(str, 'S')  
+	|| ft_strchr(str, 'W')  || ft_strchr(str, 'E')
+	|| ft_strchr(str, 'C')  || ft_strchr(str, 'F'))
+		return (1);
+	else
+	{
+		while(str[j] != 0)
+		{
+			if (str[j] != ' ')
+			{
+				ft_exit("your .cub have garbage");
+				return (0);
+			}
+		}
+	}
+	return (0);
+}
+
 char			**ft_get_map(char **map)
 {
 	char	**newmap;
@@ -109,6 +132,8 @@ char			**ft_get_map(char **map)
 		{
 			if (start == 0 && ft_strchr(map[i], '1'))
 				start = i;
+			else if (start == 0)
+				ft_newmap_garbage_check(map[i]);
 		}
 	}
 	newmap = (char **)malloc(sizeof(char *) * (i - start + 1));

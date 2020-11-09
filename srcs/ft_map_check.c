@@ -20,26 +20,24 @@ void	ft_neighbors_cheсk(char **map, int i, int j)
 		ft_exit("the wall is not closed sl");
 	if (!map[i + 1])
 		ft_exit("the wall is not closed n1");
-	else if (map[i + 1][j] == ' ')
+	if (map[i + 1][j] == ' ')
 		ft_exit("the wall is not closed n2");
 	if (i == 0)
+		ft_exit("the wall is not closed v1");
+	else if (map[i - 1][j] == ' ')
+		ft_exit("the wall is not closed v1");
+	if (!map[i - 1])
 		ft_exit("the wall is not closed v1");
 }
 
 void	ft_diagonals_check(char **map, int i, int j)
 {
 	if (!map[i + 1][j + 1] || map[i + 1][j + 1] == ' ')
-	{
-		printf("%d %d %s c='%c'\n", i, j, map[i], map[i][j]);
 		ft_exit("the wall is not closed unp");
-	}
 	if (!map[i - 1][j - 1] || map[i - 1][j - 1] == ' ')
 		ft_exit("the wall is not closed uvl");
 	if (!map[i + 1][j - 1] || map[i + 1][j - 1] == ' ')
-	{
-		printf("%d %d %s %c\n", i, j, map[i], map[i][j]);
 		ft_exit("the wall is not closed unl");
-	}
 	if (!map[i - 1][j + 1] || map[i - 1][j + 1] == ' ')
 		ft_exit("the wall is not closed uvp");
 }
@@ -89,28 +87,78 @@ void	ft_spaces_in_line_chek(char *lineofmap, int j)
 		ft_spaces_in_line_chek(lineofmap, lineend + 1);
 }
 
+void	*ft_bspaces(size_t num, size_t size)
+{
+	char			*des;
+	size_t			i;
+
+	if (!(des = (void *)malloc(num * size)))
+		return (NULL);
+	ft_bzero(des, num * size);
+	i = 0;
+	while (i < size)
+	{
+		des[i] = ' ';
+		i++;
+	}
+	return (des);
+}
+
+void	ft_add_spaces(char **map)
+{
+	int		i;
+	int		len;
+	int		k;
+	char	*tmp;
+
+	i = -1;
+	len = 0;
+	k = 0;
+	while (map[++i] != 0)
+	{
+		k = (int)ft_strlen(map[i]);
+		if (k > len)
+			len = k;
+	}
+	i = -1;
+	while (map[++i] != 0)
+	{
+		if ((k = (int)ft_strlen(map[i])) < len)
+		{
+			tmp = ft_bspaces(len - k, sizeof(char));
+			map[i] = ft_strjoin(map[i], tmp);
+			free(tmp);
+		}
+	}
+}
+
 void	ft_map_test(char **map)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (map[i])
+	ft_add_spaces(map);
+	while (map[i] != 0)
 	{
 		j = 0;
+		printf("%s\n", map[i]);
 		ft_line_of_spaces_chek(map[i]);
 		ft_spaces_in_line_chek(map[i], j);
-		while (map[i][j])
+		printf("ya tut1\n");
+		while (map[i][j] != 0)
 		{
 			if (map[i][j] == '0' || map[i][j] == '2'
 			|| map[i][j] == 'N' || map[i][j] == 'W'
 			|| map[i][j] == 'E' || map[i][j] == 'S')
 			{
 				ft_neighbors_cheсk(map, i, j);
-				//ft_diagonals_check(map, i, j);
+				ft_diagonals_check(map, i, j);
 			}
 			j++;
 		}
 		i++;
+		printf("ya tut2\n");
 	}
+	printf("ya tut3\n");
 }

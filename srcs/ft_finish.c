@@ -67,5 +67,5 @@ void	ft_free_array(char **str)
 		free(str[i]);
 		i++;
 	}
-	//free(str);
+	free(str);
 }
