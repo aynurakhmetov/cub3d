@@ -20,25 +20,46 @@ t_point	ft_get_new_plr(int keycode, t_all *all)
 	new.x = all->plr->x;
 	if (keycode == KEY_W)
 	{
-		new.y += (SCALE) * sin(all->plr->dir);
-		new.x += (SCALE) * cos(all->plr->dir);
+		new.y += (SCALE * 0.66) * sin(all->plr->dir);
+		new.x += (SCALE * 0.66) * cos(all->plr->dir);
 	}
 	if (keycode == KEY_S)
 	{
-		new.y -= (SCALE) * sin(all->plr->dir);
-		new.x -= (SCALE) * cos(all->plr->dir);
+		new.y -= (SCALE * 0.66) * sin(all->plr->dir);
+		new.x -= (SCALE * 0.66) * cos(all->plr->dir);
 	}
 	if (keycode == KEY_A)
 	{
-		new.y -= (SCALE) * cos(all->plr->dir);
-		new.x += (SCALE) * sin(all->plr->dir);
+		new.y -= (SCALE * 0.66) * cos(all->plr->dir);
+		new.x += (SCALE * 0.66) * sin(all->plr->dir);
 	}
 	if (keycode == KEY_D)
 	{
-		new.y += (SCALE) * cos(all->plr->dir);
-		new.x -= (SCALE) * sin(all->plr->dir);
+		new.y += (SCALE * 0.66) * cos(all->plr->dir);
+		new.x -= (SCALE * 0.66) * sin(all->plr->dir);
 	}
 	return (new);
+}
+
+int		ft_slit_check_plr(t_point ray, t_all *all)
+{
+	t_point test;
+	t_point test2;
+
+	if (all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] == '0')
+	{
+		test.x = ray.x - cos(all->plr->dir) * (SCALE / 2);
+		test.y = ray.y + sin(all->plr->dir) * (SCALE / 2);
+		test2.x = ray.x + cos(all->plr->dir) * (SCALE / 2);
+		test2.y = ray.y - sin(all->plr->dir) * (SCALE / 2);
+		if (all->map[(int)(test.y / (SCALE))][(int)(test.x / (SCALE))] == '1'
+	&& all->map[(int)(test2.y / (SCALE))][(int)(test2.x / (SCALE))] == '1')
+			return (0);
+		if (all->map[(int)(test.y / (SCALE))][(int)(test.x / (SCALE))] == '2'
+	&& all->map[(int)(test2.y / (SCALE))][(int)(test2.x / (SCALE))] == '2')
+			return (0);
+	}
+	return (1);
 }
 
 int		ft_key_press(int keycode, t_all *all)
@@ -47,7 +68,8 @@ int		ft_key_press(int keycode, t_all *all)
 
 	new = ft_get_new_plr(keycode, all);
 	if (all->map[(int)(new.y / SCALE)][(int)(new.x / SCALE)] != '1'
-		&& all->map[(int)(new.y / SCALE)][(int)(new.x / SCALE)] != '2')
+		&& all->map[(int)(new.y / SCALE)][(int)(new.x / SCALE)] != '2'
+		&& ft_slit_check_plr(new, all) != 0)
 	{
 		all->plr->y = new.y;
 		all->plr->x = new.x;

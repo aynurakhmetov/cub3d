@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:14:29 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 19:01:07 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 19:07:10 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,11 @@ int				ft_get_line_mumber(char **map, char *identifier);
 void			ft_map_test(char **map);
 void			ft_color_garbage_check_next(char *cstr);
 void			ft_texture_garbage_chek(char *tstr, char *identifier);
+int				ft_newmap_garbage_check(char *str);
+void			ft_playmap_garbage_check(char c);
+void			ft_texture_open_check(char *address, char *identifier);
+void			ft_neighbors_cheсk(char **map, int i, int j);
+void			ft_diagonals_check(char **map, int i, int j);
 void			ft_start_game(t_map mapinfo, int savebmp);
 int				ft_key_press(int keycode, t_all *all);
 t_plr			ft_get_plr_info(t_map mapinfo);
@@ -150,6 +155,7 @@ t_sprite		*ft_get_sprite_info(t_map mapinfo);
 t_all			ft_get_all_info(t_map mapinfo, t_win data);
 int				ft_render_next_frame(t_all *all);
 void			ft_cast_rays(t_all *all);
+void			ft_draw_wall_after_sprite(t_all *all, t_plr ray, int i);
 void			ft_cub_2d(t_all *all);
 void			ft_draw(t_all *all, float i, float j, int color);
 void			ft_draw_wall(t_all *all, t_plr ray, int i);
@@ -162,4 +168,6 @@ void			ft_exit_identifier(char *errormassage, char *identifier);
 int				ft_finish_game(t_all *all);
 void			ft_lstclear_here(t_list **lst);
 void			ft_free_array(char **str);
+void			ft_cub_2d(t_all *all);
+
 #endif

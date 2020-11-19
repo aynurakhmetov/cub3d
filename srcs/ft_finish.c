@@ -31,16 +31,17 @@ int		ft_finish_game(t_all *all)
 {
 	int i;
 
-	i = 0;
-	if (all->map[i])
-	{
-		while (all->map[i])
-		{
-			free(all->map[i]);
-			i++;
-		}
+	i = -1;
+	while (all->map[++i])
 		free(all->map[i]);
-	}
+	free(all->map);
+	if (all->plr)
+		free(all->plr);
+	i = -1;
+	if (all->dist_wall)
+		free(all->dist_wall);
+	if (all->sprites)
+		free(all->sprites);
 	exit(0);
 }
 
@@ -51,21 +52,7 @@ void	ft_lstclear_here(t_list **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		//free((*lst)->content);
 		free(*lst);
 		(*lst) = tmp;
 	}
-}
-
-void	ft_free_array(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
 }

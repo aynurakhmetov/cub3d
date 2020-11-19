@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 21:45:13 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 19:02:06 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 19:06:06 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ void	ft_map_error_test(t_map mapinfo)
 		j = -1;
 		while (mapinfo.map[i][++j] != 0)
 		{
-			if (mapinfo.map[i][j] != 'N' && mapinfo.map[i][j] != 'E'
-			&& mapinfo.map[i][j] != 'W' && mapinfo.map[i][j] != 'S'
-			&& mapinfo.map[i][j] != '1' && mapinfo.map[i][j] != '2'
-			&& mapinfo.map[i][j] != '0' && mapinfo.map[i][j] != ' ')
-				ft_exit("garbage in the map");
+			ft_playmap_garbage_check(mapinfo.map[i][j]);
 			if (mapinfo.map[i][j] == 'N' || mapinfo.map[i][j] == 'E'
 			|| mapinfo.map[i][j] == 'W' || mapinfo.map[i][j] == 'S')
 				k++;
@@ -39,7 +35,7 @@ void	ft_map_error_test(t_map mapinfo)
 	if (k > 1)
 		ft_exit("many players");
 	if (k == 0)
-		ft_exit("player not found");	
+		ft_exit("player not found");
 }
 
 t_map	ft_get_map_info(char **newmap)
@@ -67,7 +63,8 @@ char	**ft_make_map(t_list **head, int size)
 	int		i;
 	t_list	*tmp;
 
-	map = ft_calloc(size + 1, sizeof(char *));
+	if (!(map = ft_calloc(size + 1, sizeof(char *))))
+		ft_exit("malloc error in ft_make_map");
 	i = 0;
 	tmp = *head;
 	while (tmp)
@@ -101,6 +98,7 @@ t_map	ft_map_parser(char *mapinput)
 	free(line);
 	ft_lstclear_here(&head);
 	free(head);
+	close(fd);
 	return (mapinfo);
 }
 

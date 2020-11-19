@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 17:16:15 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 16:25:37 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:56:39 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,25 @@
 
 char	ft_find_new_dir(t_all *all, t_plr test_plr, t_plr ray, char *dir)
 {
+	t_plr test;
+	t_plr test2;
+
 	if (all->map[(int)(ray.y / SCALE)][(int)(test_plr.x / SCALE)] == '1')
 		return (dir[0]);
 	if (all->map[(int)(test_plr.y / SCALE)][(int)(ray.x / SCALE)] == '1')
 		return (dir[1]);
 	if (all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] == '1')
 		return (dir[0]);
+	if (all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] == '0')
+	{
+		test.x = ray.x - cos(ray.start);
+		test.y = ray.y + sin(ray.start);
+		test2.x = ray.x + cos(ray.start);
+		test2.y = ray.y - sin(ray.start);
+		if (all->map[(int)(test.y / (SCALE))][(int)(test.x / (SCALE))] == '1'
+	&& all->map[(int)(test2.y / (SCALE))][(int)(test2.x / (SCALE))] == '1')
+			return (dir[0]);
+	}
 	return (all->plr->dir);
 }
 
@@ -70,14 +83,25 @@ char	ft_get_new_dir(t_plr ray, t_all *all)
 	return (new_dir);
 }
 
-void	ft_draw_wall_after_sprite(t_all *all, t_plr ray, int i)
+int		ft_slit_check(t_plr ray, t_all *all, int i)
 {
-	while (all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] != '1')
+	t_plr test;
+	t_plr test2;
+
+	if (all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] == '0')
 	{
-		ray.x += cos(ray.start);
-		ray.y += sin(ray.start);
+		test.x = ray.x - cos(ray.start);
+		test.y = ray.y + sin(ray.start);
+		test2.x = ray.x + cos(ray.start);
+		test2.y = ray.y - sin(ray.start);
+		if (all->map[(int)(test.y / (SCALE))][(int)(test.x / (SCALE))] == '1'
+	&& all->map[(int)(test2.y / (SCALE))][(int)(test2.x / (SCALE))] == '1')
+		{
+			ft_draw_wall(all, ray, i);
+			return (0);
+		}
 	}
-	ft_draw_wall(all, ray, i);
+	return (1);
 }
 
 void	ft_cast_rays(t_all *all)
@@ -93,18 +117,18 @@ void	ft_cast_rays(t_all *all)
 	{
 		ray.x = all->plr->x;
 		ray.y = all->plr->y;
-		while (all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] != '1'
-			&& all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] != '2')
+		while (all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] != '1'
+			&& all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] != '2'
+			&& ft_slit_check(ray, all, i) != 0)
 		{
 			ray.x += cos(ray.start);
 			ray.y += sin(ray.start);
-			ft_draw(all, ray.y / (SCALE / 10.0), ray.x / (SCALE / 10.0), 0x00990099);
 		}
-		if (all->map[(int)(ray.y / SCALE)][(int)(ray.x / SCALE)] == '2')
+		if (all->map[(int)(ray.y / (SCALE))][(int)(ray.x / (SCALE))] == '2')
 			ft_draw_wall_after_sprite(all, ray, i);
 		else
 			ft_draw_wall(all, ray, i);
 		i++;
-		ray.start += FOV / all->mapinfo->xrendersize;
+		ray.start += FOV / (all->mapinfo->xrendersize);
 	}
 }

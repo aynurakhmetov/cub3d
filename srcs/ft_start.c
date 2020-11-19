@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_start_game.c                                    :+:      :+:    :+:   */
+/*   ft_start.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 13:07:41 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:12:47 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:56:55 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		ft_render_next_frame(t_all *all)
 {
 	ft_cast_rays(all);
-	ft_draw_sprites(all);
-	ft_cub_2d(all);
+	if (all->spritelen != 0)
+		ft_draw_sprites(all);
 	mlx_put_image_to_window(all->win->mlx, all->win->win, all->win->img, 0, 0);
 	return (0);
 }
@@ -50,7 +50,6 @@ void	ft_start_game(t_map mapinfo, int savebmp)
 	t_win	data;
 	t_all	all;
 
-	
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, mapinfo.xrendersize,
 				mapinfo.yrendersize, "CUB3D");

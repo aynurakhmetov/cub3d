@@ -6,13 +6,13 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:13:26 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 17:58:15 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:58:35 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
-static	int		make_head(unsigned char *bmp_head,
+int		ft_make_head(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		size;
@@ -40,7 +40,7 @@ static	int		make_head(unsigned char *bmp_head,
 	return (1);
 }
 
-static int		ft_make_file_screen(unsigned char *bmp_head,
+int		ft_make_file_screen(unsigned char *bmp_head,
 	unsigned char *bmp_fhead, t_all *all)
 {
 	int		fd;
@@ -63,7 +63,7 @@ static int		ft_make_file_screen(unsigned char *bmp_head,
 	return (1);
 }
 
-int				ft_screenshot(t_all *all)
+int		ft_screenshot(t_all *all)
 {
 	unsigned char	bmp_head[14];
 	unsigned char	bmp_fhead[40];
@@ -71,7 +71,7 @@ int				ft_screenshot(t_all *all)
 	ft_putendl_fd("screenshot saved", 1);
 	ft_bzero(bmp_head, 14);
 	ft_bzero(bmp_fhead, 40);
-	make_head(bmp_head, bmp_fhead, all);
+	ft_make_head(bmp_head, bmp_fhead, all);
 	if (!(ft_make_file_screen(bmp_head, bmp_fhead, all)))
 		ft_putendl_fd("Problem with screenshot saving", 1);
 	mlx_destroy_window(all->win->mlx, all->win->win);

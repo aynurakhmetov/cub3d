@@ -3,44 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:13:53 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:13:58 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:53:28 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-void	ft_neighbors_cheсk(char **map, int i, int j)
-{
-	if (!map[i][j + 1] || map[i][j + 1] == ' ')
-		ft_exit("the wall is not closed sp");
-	if (!map[i][j - 1] || map[i][j - 1] == ' ')
-		ft_exit("the wall is not closed sl");
-	if (!map[i + 1])
-		ft_exit("the wall is not closed n1");
-	if (map[i + 1][j] == ' ')
-		ft_exit("the wall is not closed n2");
-	if (i == 0)
-		ft_exit("the wall is not closed v1");
-	else if (map[i - 1][j] == ' ')
-		ft_exit("the wall is not closed v1");
-	if (!map[i - 1])
-		ft_exit("the wall is not closed v1");
-}
-
-void	ft_diagonals_check(char **map, int i, int j)
-{
-	if (!map[i + 1][j + 1] || map[i + 1][j + 1] == ' ')
-		ft_exit("the wall is not closed unp");
-	if (!map[i - 1][j - 1] || map[i - 1][j - 1] == ' ')
-		ft_exit("the wall is not closed uvl");
-	if (!map[i + 1][j - 1] || map[i + 1][j - 1] == ' ')
-		ft_exit("the wall is not closed unl");
-	if (!map[i - 1][j + 1] || map[i - 1][j + 1] == ' ')
-		ft_exit("the wall is not closed uvp");
-}
 
 void	ft_line_of_spaces_chek(char *lineofmap)
 {
@@ -93,7 +63,7 @@ void	*ft_bspaces(size_t num, size_t size)
 	size_t			i;
 
 	if (!(des = (void *)malloc(num * size)))
-		return (NULL);
+		ft_exit("malloc error bsapces");
 	ft_bzero(des, num * size);
 	i = 0;
 	while (i < size)
@@ -142,10 +112,8 @@ void	ft_map_test(char **map)
 	while (map[i] != 0)
 	{
 		j = 0;
-		printf("%s\n", map[i]);
 		ft_line_of_spaces_chek(map[i]);
 		ft_spaces_in_line_chek(map[i], j);
-		printf("ya tut1\n");
 		while (map[i][j] != 0)
 		{
 			if (map[i][j] == '0' || map[i][j] == '2'
@@ -158,7 +126,5 @@ void	ft_map_test(char **map)
 			j++;
 		}
 		i++;
-		printf("ya tut2\n");
 	}
-	printf("ya tut3\n");
 }

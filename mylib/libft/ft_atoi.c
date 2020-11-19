@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <gmarva@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 17:30:07 by gmarva            #+#    #+#             */
-/*   Updated: 2020/05/30 15:06:45 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 19:55:39 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int ft_nb_test(long long nb, int k, int m, int i)
+static int	ft_nb_test(long long nb, int k, int m, int i)
 {
 	if (i == m)
 		return (-1);
 	nb = nb * (k);
-	if (nb > 2147483647)
+	if (((i - m) > 10 && k == 1) || nb > 2147483647)
 		return (2147483647);
-	if (nb < -2147483648)
+	if (((i - m) > 10 && k < 0) || nb < -2147483648)
 		return (-2147483648);
 	return (nb);
 }
 
-int	ft_atoi(const char *str)
+int			ft_atoi(const char *str)
 {
 	int			i;
 	long long	nb;
 	int			k;
-	int 		m;
+	int			m;
 
 	i = 0;
 	nb = 0;

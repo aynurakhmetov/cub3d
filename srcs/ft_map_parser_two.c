@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 19:41:50 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 18:48:14 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 19:07:47 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ unsigned int	ft_create_trgb(char **str)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void		ft_color_garbage_check(char *cstr, char c)
+void			ft_color_garbage_check(char *cstr, char c)
 {
 	int i;
 	int k;
@@ -44,7 +44,7 @@ void		ft_color_garbage_check(char *cstr, char c)
 	{
 		if ((cstr[i] < '0' || cstr[i] > '9') && cstr[i] != ' '
 		&& cstr[i] != '-' && cstr[i] != '+' && cstr[i] != c
-		&& cstr[i] != ',')
+		&& cstr[i] != ',' && cstr[i] != '\t')
 			ft_exit("garbage in c");
 		if ((cstr[i] == '+' || cstr[i] == '-')
 		&& (cstr[i + 1] < '0' || cstr[i + 1] > '9'))
@@ -57,7 +57,7 @@ void		ft_color_garbage_check(char *cstr, char c)
 	ft_color_garbage_check_next(cstr);
 }
 
-void		ft_color_check(int j, char *cstr, char c)
+void			ft_color_check(int j, char *cstr, char c)
 {
 	if (j > 3)
 		ft_exit("many color arguments");
@@ -92,18 +92,18 @@ unsigned int	ft_get_color(char **map, char *identifier)
 	return (ft_create_trgb(color));
 }
 
-int			ft_newmap_garbage_check(char *str)
+int				ft_newmap_garbage_check(char *str)
 {
 	int j;
 
 	j = 0;
-	if (ft_strchr(str, 'R') || ft_strchr(str, 'S')  
-	|| ft_strchr(str, 'W')  || ft_strchr(str, 'E')
-	|| ft_strchr(str, 'C')  || ft_strchr(str, 'F'))
+	if (ft_strchr(str, 'R') || ft_strchr(str, 'S')
+	|| ft_strchr(str, 'W') || ft_strchr(str, 'E')
+	|| ft_strchr(str, 'C') || ft_strchr(str, 'F'))
 		return (1);
 	else
 	{
-		while(str[j] != 0)
+		while (str[j] != 0)
 		{
 			if (str[j] != ' ')
 			{
@@ -113,37 +113,4 @@ int			ft_newmap_garbage_check(char *str)
 		}
 	}
 	return (0);
-}
-
-char			**ft_get_map(char **map)
-{
-	char	**newmap;
-	int		i;
-	int		start;
-
-	i = -1;
-	start = 0;
-	while (map[++i] != 0)
-	{
-		if (ft_strchr(map[i], '.') || ft_strchr(map[i], ',')
-		|| ft_strchr(map[i], 'R'))
-			continue ;
-		else
-		{
-			if (start == 0 && ft_strchr(map[i], '1'))
-				start = i;
-			else if (start == 0)
-				ft_newmap_garbage_check(map[i]);
-		}
-	}
-	newmap = (char **)malloc(sizeof(char *) * (i - start + 1));
-	i = 0;
-	if (start != 0)
-	{
-		while (map[start] != 0)
-			newmap[i++] = ft_strdup(map[start++]);
-	}
-	else
-		ft_exit("map not found");
-	return (newmap);
 }

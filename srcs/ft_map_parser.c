@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_map_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 22:45:57 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/07 18:12:40 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 19:56:19 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int		ft_get_line_mumber(char **map, char *identifier)
 	int k;
 	int m;
 
-	i = 0;
+	i = -1;
 	m = -1;
 	k = 0;
-	while (map[i] != 0)
+	while (map[++i] != 0)
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (ft_strncmp(&map[i][j], identifier, ft_strlen(identifier)) == 0)
 			{
@@ -34,17 +34,17 @@ int		ft_get_line_mumber(char **map, char *identifier)
 				if (k > 1)
 					ft_exit("many identifier");
 			}
-			j++;
 		}
-		i++;
 	}
+	if (m == -1 && identifier[0] == 'R')
+		ft_exit_identifier("identifier not found - ", identifier);
 	return (m);
 }
 
 int		ft_render_cheсk(int r_num_1, int r_num_2, int numofres)
 {
 	if (r_num_1 <= 0 || r_num_2 <= 0)
-		ft_exit("render size R <= 0");
+		ft_exit("incorrect R");
 	if (r_num_1 > 2560)
 		r_num_1 = 2560;
 	if (r_num_2 > 1440)
@@ -68,7 +68,8 @@ void	ft_render_garbage_check(char *rstr)
 	while (rstr[++j] != 0)
 	{
 		if ((rstr[j] < '0' || rstr[j] > '9') && rstr[j] != ' '
-		&& rstr[j] != '-' && rstr[j] != '+' && rstr[j] != 'R')
+		&& rstr[j] != '-' && rstr[j] != '+' && rstr[j] != 'R'
+		&& rstr[j] != '\t')
 			ft_exit("garbage in R");
 		if ((rstr[j] == '+' || rstr[j] == '-')
 		&& (rstr[j + 1] < '0' || rstr[j + 1] > '9'))
@@ -77,7 +78,7 @@ void	ft_render_garbage_check(char *rstr)
 			k++;
 		if (k > 1)
 			ft_exit("garbage in R");
-		if (rstr[j] == ' ' && (rstr[j + 1] >= '0' &&  rstr[j + 1] <= '9'))
+		if (rstr[j] == ' ' && (rstr[j + 1] >= '0' && rstr[j + 1] <= '9'))
 			m++;
 		if (m > 2)
 			ft_exit("garbage in R");
@@ -94,8 +95,7 @@ int		ft_get_render_size(char **map, int numofres)
 	j = -1;
 	r_num_1 = -1;
 	r_num_2 = -1;
-	if ((i = ft_get_line_mumber(map, "R ")) == -1)
-		ft_exit("identifier R not found");
+	i = ft_get_line_mumber(map, "R ");
 	ft_render_garbage_check(map[i]);
 	while (map[i][++j] != 0)
 	{
@@ -137,8 +137,7 @@ char	*ft_get_texture(char **map, char *identifier)
 		}
 	}
 	address = ft_substr(map[i], start, k);
-	if ((open(address, O_RDONLY)) == -1)
-		ft_exit_identifier("texture does not open - ", identifier);
+	ft_texture_open_check(address, identifier);
 	ft_texture_garbage_chek(map[i], identifier);
 	return (address);
 }

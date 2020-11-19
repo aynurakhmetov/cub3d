@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:13:01 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 18:49:15 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:55:55 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ t_plr		ft_get_plr_info(t_map mapinfo)
 			if (mapinfo.map[i][j] == 'N' || mapinfo.map[i][j] == 'E'
 			|| mapinfo.map[i][j] == 'W' || mapinfo.map[i][j] == 'S')
 			{
-				plr.x = j * 64 + 32;
-				plr.y = i * 64 + 32;
+				plr.x = j * SCALE + SCALE / 2;
+				plr.y = i * SCALE + SCALE / 2;
 				plr.dir = ft_get_dir_info(mapinfo.map, i, j);
 				break ;
 			}
@@ -83,23 +83,22 @@ t_sprite	*ft_get_sprite_info(t_map mapinfo)
 	int			l;
 
 	len = ft_get_number_of_sprites(mapinfo);
-	sprites = malloc(sizeof(t_sprite) * (len + 1));
+	if (!(sprites = malloc(sizeof(t_sprite) * (len + 1))))
+		ft_exit("malloc problem in ft_get_sprite_info");
+	if (len == 0)
+		sprites[0].len = 0;
 	i = -1;
 	l = 0;
 	while (mapinfo.map[++i])
 	{
-		j = 0;
-		while (mapinfo.map[i][j])
-		{
+		j = -1;
+		while (mapinfo.map[i][++j])
 			if (mapinfo.map[i][j] == '2' && mapinfo.map[i][j] != '1')
 			{
 				sprites[l].len = len;
-				sprites[l].x = j * 64 + 32;
-				sprites[l].y = i * 64 + 32;
-				l++;
+				sprites[l].x = j * SCALE + SCALE / 2;
+				sprites[l++].y = i * SCALE + SCALE / 2;
 			}
-			j++;
-		}
 	}
 	return (sprites);
 }
@@ -113,16 +112,19 @@ t_all		ft_get_all_info(t_map mapinfo, t_win data)
 
 	point.x = 0;
 	point.y = 0;
-	plr = malloc(sizeof(t_plr) * 1);
-	*plr = ft_get_plr_info(mapinfo);
 	sprite = ft_get_sprite_info(mapinfo);
 	all.map = mapinfo.map;
-	all.plr = plr;
 	all.win = &data;
 	all.point = &point;
 	all.mapinfo = &mapinfo;
 	all.sprites = sprite;
 	all.spritelen = sprite[0].len;
-	all.dist_wall = malloc(sizeof(float) * (all.mapinfo->xrendersize + 1));
+	if (!(plr = malloc(sizeof(t_plr) * 1)))
+		ft_finish_game(&all);
+	*plr = ft_get_plr_info(mapinfo);
+	all.plr = plr;
+	if (!(all.dist_wall = malloc(sizeof(float)
+		* (all.mapinfo->xrendersize + 1))))
+		ft_finish_game(&all);
 	return (all);
 }

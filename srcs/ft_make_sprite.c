@@ -6,7 +6,7 @@
 /*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 18:12:14 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/08 17:57:00 by gmarva           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:58:10 by gmarva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,17 @@ void			ft_j_count(t_all *all, t_spriteinfo *sprite, float i)
 	{
 		sprite->y = (unsigned int)sprite->pos & (all->text[0].img_height - 1);
 		color = ft_get_texture_color(all, sprite->y, sprite->x, 0);
-		//printf("ya tut 41.3.1.1\n");
 		if (sprite->v_offset + j < 0 || sprite->v_offset + j
 			> all->mapinfo->yrendersize)
 		{
 			j++;
 			continue;
 		}
-		//printf("ya tut 41.3.1.2\n");
 		if (*(int *)color)
 			ft_draw(all, sprite->v_offset + j, sprite->h_offset + i,
 			*(int *)color);
-		//printf("ya tut 41.3.1.3\n");
 		sprite->pos += sprite->step;
 		j++;
-		//printf("ya tut 41.3.1.4\n");
 	}
 }
 

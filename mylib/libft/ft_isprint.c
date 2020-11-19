@@ -14,7 +14,7 @@
 
 int	ft_isprint(int ch)
 {
-	if (ch >= 32 && ch <= 126)
+	if (ch >= 32 && ch <= 127)
 		return (8);
 	return (0);
 }
