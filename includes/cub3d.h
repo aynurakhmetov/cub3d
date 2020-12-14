@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/07 18:14:29 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/09 19:07:10 by gmarva           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
 # define CUB3D_H
 # define SCALE 64
@@ -146,7 +134,7 @@ void			ft_texture_garbage_chek(char *tstr, char *identifier);
 int				ft_newmap_garbage_check(char *str);
 void			ft_playmap_garbage_check(char c);
 void			ft_texture_open_check(char *address, char *identifier);
-void			ft_neighbors_cheсk(char **map, int i, int j);
+void			ft_neighbors_check(char **map, int i, int j);
 void			ft_diagonals_check(char **map, int i, int j);
 void			ft_start_game(t_map mapinfo, int savebmp);
 int				ft_key_press(int keycode, t_all *all);

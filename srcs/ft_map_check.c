@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_map_check.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gmarva <gmarva@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/07 18:13:53 by gmarva            #+#    #+#             */
-/*   Updated: 2020/11/09 18:53:28 by gmarva           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "./../includes/cub3d.h"
 
 void	ft_line_of_spaces_chek(char *lineofmap)
@@ -120,7 +108,7 @@ void	ft_map_test(char **map)
 			|| map[i][j] == 'N' || map[i][j] == 'W'
 			|| map[i][j] == 'E' || map[i][j] == 'S')
 			{
-				ft_neighbors_cheсk(map, i, j);
+				ft_neighbors_check(map, i, j);
 				ft_diagonals_check(map, i, j);
 			}
 			j++;
